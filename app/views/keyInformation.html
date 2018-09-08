@@ -1,0 +1,124 @@
+<div class="row" ng-cloak>
+  <div class="col-sm-4" ng-show="keyInformation.isProfilePic">
+    <img data-ng-src="data:image/png;base64,{{keyInformation.profilePicture}}" class="img-responsive img-rounded m-h-190" />
+  </div>
+  <div ng-class="keyInformation.isProfilePic ? 'col-sm-4' : 'col-sm-6'" ng-cloak>
+    <h2 class="m-t-5">{{keyInformation.requestedLoanAmount | fpMyBidPartsCurrency}}</h2>
+    <h4 class="m-t-5">Rente: {{keyInformation.interestRate | fpPercentage:1}}</h4>
+    <div class="m-t-20" ng-show="keyInformation.isPercentFundedVisible">
+      <uib-progressbar animate="false" value="keyInformation.percentFunded" type="success" class="table-cell-multline" ng-cloak>{{keyInformation.percentFunded | fpPercentage:1}}</uib-progressbar>
+    </div>
+  </div>
+
+  <div class="col-sm-4">
+    <form class="form-horizontal">
+      <div class="form-group">
+        <label class="col-sm-8 control-label">
+          <span tooltip-placement="auto bottom" uib-tooltip="Alle lån deles inn i kredittklasser fra A-D, hvor A indikerer lavest risiko.">
+                        Kredittklasse
+                        <i class="fa fa-question-circle" aria-hidden="true"></i>
+                    </span>
+        </label>
+        <div class="col-sm-4">
+          <p class="form-control-static">{{keyInformation.riskBand}}</p>
+        </div>
+      </div>
+      <div class="form-group" ng-show="keyInformation.stage=='In Funding'">
+        <label class="col-sm-8 control-label">Tid igjen</label>
+        <div class="col-sm-4">
+          <p class="form-control-static">{{keyInformation.timeLeftFilter(keyInformation.timeLeft)}}</p>
+        </div>
+      </div>
+      <div class="form-group" ng-show="keyInformation.EstimatedAnnualBadDebtRate">
+        <label class="col-sm-8 control-label">
+          <span tooltip-placement="auto bottom" uib-tooltip="Forventet mislighold er en veiledende indikasjon på hvor mye mislighold vi forventer i denne risikoklassen.">
+                        
+                        Forventet årlig mislighold
+                        <i class="fa fa-question-circle" aria-hidden="true"></i>
+                    </span>
+        </label>
+        <div class="col-sm-4">
+          <p class="form-control-static">{{keyInformation.EstimatedAnnualBadDebtRate}}%</p>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="row">
+  <div ng-class="keyInformation.isProfilePic ? 'col-sm-4 col-sm-offset-4' : 'col-sm-6'">
+    <div class="panel panel-default">
+      <div class="panel-heading">Informasjon om låntaker</div>
+      <div class="panel-body">
+        <form>
+          <div class="form-group">
+            <label>Låntakers navn</label>
+            <p class="form-control-static">{{keyInformation.borrowerName}}</p>
+          </div>
+          <div class="form-group">
+            <label>Fylke</label>
+            <p class="form-control-static">{{keyInformation.businessRegion}}</p>
+          </div>
+          <div class="form-group">
+            <label>Selskapsform</label>
+            <p class="form-control-static">{{keyInformation.companyType}}</p>
+          </div>
+          <div class="form-group">
+            <label>År siden oppstart</label>
+            <p class="form-control-static">{{keyInformation.yearsSinceStart}}</p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">Informasjon om lån</div>
+      <div class="panel-body">
+        <form>
+          <div class="form-group">
+            <label>Løpetid</label>
+            <p class="form-control-static">{{util.getTerm(keyInformation.term)}}</p>
+          </div>
+          <div class="form-group">
+            <label>
+              <span tooltip-placement="auto right" uib-tooltip="Dette er formålet låntaker planlegger å bruke lånet til.">
+
+                            
+                                Lånets formål
+                                <i class="fa fa-question-circle" aria-hidden="true"></i>
+                            </span>
+            </label>
+            <p class="form-control-static">
+              {{keyInformation.loanPurpose}}
+            </p>
+          </div>
+          <div class="form-group">
+            <label>
+              <span tooltip-placement="auto right" uib-tooltip="Hvis lånet har en kausjonist betyr det at kausjonisten har garantert å betale avdragene, dersom selskapet selv ikke er i stand til å betale.">
+                            
+                                Bransje
+                                <i class="fa fa-question-circle" aria-hidden="true"></i>
+                            </span>
+            </label>
+            <p class="form-control-static">
+              {{keyInformation.industry}}
+            </p>
+          </div>
+          <div class="form-group">
+            <label>
+              <span tooltip-placement="auto right" uib-tooltip="Dersom selskapet misligholder gjelden kan sikkerheten selskapet stiller med bli brukt for å kompensere investorene.">
+
+                            
+                                Sikkerhet
+                                <i class="fa fa-question-circle" aria-hidden="true"></i>
+                            </span>
+            </label>
+            <p class="form-control-static">
+              {{keyInformation.assetSecurity}}
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

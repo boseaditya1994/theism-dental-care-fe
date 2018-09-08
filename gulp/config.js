@@ -3,16 +3,15 @@ export default {
   browserPort: 3000,
   UIPort: 3001,
   testPort: 3002,
-  isHttps: false,
+  isHttps: true,
 
   sourceDir: './app/',
   buildDir: './build/',
 
   styles: {
-    src: 'app/styles/**/*.scss',
+    src: 'app/styles/**/*',
     dest: 'build/css',
-    prodSourcemap: false,
-    sassIncludePaths: []
+    prodSourcemap: false
   },
 
   scripts: {
@@ -42,14 +41,15 @@ export default {
     'js',
     'css',
     'png',
-    'jpe?g',
+    'jpeg',
     'gif',
     'svg',
     'eot',
     'otf',
     'ttc',
     'ttf',
-    'woff2?'
+    'woff2?',
+    'jpg'
   ],
 
   views: {
@@ -72,6 +72,11 @@ export default {
   test: {
     karma: 'test/karma.conf.js',
     protractor: 'test/protractor.conf.js'
+  },
+
+  extScripts: {
+    src: 'app/scripts/**/*',
+    dest: 'build/js/ext'
   },
 
   init: function() {

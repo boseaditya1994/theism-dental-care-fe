@@ -1,0 +1,7 @@
+<div class="container-fluid">
+  <uib-tabset active="borrowerDashboard.active" vertical="{{util.detectmob()}}">
+    <uib-tab ng-repeat="tab in borrowerDashboard.tabs" heading="{{tab.title}}" index="tab.route" select="borrowerDashboard.tabSelected(tab.route)">
+    </uib-tab>
+  </uib-tabset>
+  <div ui-view class="tab-container borrow_dash"></div>
+</div>

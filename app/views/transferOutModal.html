@@ -1,0 +1,20 @@
+<div class="modal-header">
+  <h3 class="modal-title" id="modal-title">Bekreft uttak</h3>
+</div>
+<div class="modal-body" id="modal-body">
+  <div ng-hide="transactionOutModal.isConfirmed">
+    Er du sikker på at du vil ta ut penger fra din FundingPartner-konto?
+  </div>
+  <div class="alert alert-success" ng-show="transactionOutModal.isSuccess">
+    <strong>Transaksjonen var vellykket. Pengene vil være tilgjengelige på din bankkonto i løpet av en til to virkedager. </strong> 
+  </div>
+  <div class="alert alert-failure" ng-show="transactionOutModal.isConfirmed && transactionOutModal.isFailed">
+    <strong>Beklager! Transaksjon mislykket. </strong>
+    
+  </div>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" type="button" ng-click="transactionOutModal.confirm()" ng-hide="transactionOutModal.isConfirmed" double-Click timeout="5000">Ja</button>
+  <button class="btn btn-default" type="button" ng-click="$dismiss()" ng-hide="transactionOutModal.isConfirmed" double-Click timeout="5000">Nei</button>
+  <button class="btn btn-default" type="button" ng-click="$dismiss()" ng-show="transactionOutModal.isDone">Fortsett</button>
+</div>

@@ -1,0 +1,7 @@
+﻿<div class="container-fluid customContainer">
+  <uib-tabset justified="true" active="transferInDetails.active" vertical="{{util.detectmob()}}">
+    <uib-tab ng-repeat="tab in transferInDetails.tabs" heading="{{tab.title}}" index="tab.route" select="transferInDetails.tabSelected(tab.route)">
+    </uib-tab>
+  </uib-tabset>
+  <div ui-view></div>
+</div>

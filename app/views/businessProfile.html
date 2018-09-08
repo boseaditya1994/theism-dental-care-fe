@@ -1,0 +1,10 @@
+<div class="row">
+	<div class="col-md-3" ng-show="businessProfile.profilePic.length>0">
+  		<p ng-repeat="x in businessProfile.profilePic track by $index">
+    		<img data-ng-src="data:image/png;base64,{{x}}" class="img-responsive img-rounded m-h-190"/>
+  		</p>
+  	</div>
+  	<div ng-class="businessProfile.profilePic.length>0 ? 'col-md-9' : 'col-md-12'" >
+  		<div ng-bind-html="businessProfile.profile"></div>
+  	</div>
+</div>

@@ -1,0 +1,34 @@
+<div class="modal-header">
+<span us-spinner="{left: '50%',top:'25%',length: 16,width: 8,radius:25}"  spinner-key="spinner-2"></span>
+    <h3 class="modal-title" ng-hide="bid.isConfirmed && bid.isDoneByFp" id="modal-title">Bekreft bud</h3>
+    <h3 class="modal-title" ng-show="bid.isConfirmed && bid.isDoneByFp" id="modal-title">Kundeverifikasjonen må gjøres manuelt</h3>
+</div>
+<div class="modal-body" id="modal-body">
+    <div ng-hide="bid.isConfirmed">
+        <dl class="dl-horizontal dl-size-md">
+            <dt>Lån </dt>
+            <dd><span ng-bind="bid.name"></span></dd>
+            <dt>Beløp</dt>
+            <dd><span ng-bind="bid.amount | fpCurrency"></span></dd>
+        </dl>
+    </div>
+
+    <div class="alert alert-success" ng-show="bid.isConfirmed && !bid.isInsertFAiled && bid.isKYCChecked">
+        <strong>Din tegning er registrert. </strong> 
+    </div>
+
+    <div class="alert alert-failure" ng-show="bid.isConfirmed && bid.isError">
+        <strong>En feil har oppstått. Ta kontakt med FundingPartner.</strong> 
+    </div>
+
+    <div class="alert alert-failure" ng-show="bid.isConfirmed && bid.isDoneByFp">
+        <strong>Da det er flere personer med signaturrettigheter i ditt foretak må kundeverifikasjonen gjøres manuelt. Vennligst ta kontakt med FundingPartner for å høre om status på dette arbeidet.</strong> 
+    </div>
+
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="bid.bidToInvest()" ng-hide="bid.isConfirmed" double-Click timeout="5000">Bekreft</button>
+    <button class="btn btn-default" type="button" ng-click="$dismiss()">{{bid.isConfirmed ? 'Fortsett' : 'Avbryt'}}</button>
+</div>
+
+

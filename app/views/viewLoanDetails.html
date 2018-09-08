@@ -1,0 +1,112 @@
+<div class="container-fluid" ng-cloak>
+  <h3 class="page-title ng-binding" ng-show="!viewLoanDetails.loanDetails.Title">Detaljer om lån</h3>
+  <h3 class="page-title ng-binding" ng-show='viewLoanDetails.loanDetails.Title'>{{viewLoanDetails.loanDetails.Title}}</h3>
+  <div class="tab-container ">
+    <div class="row" ng-cloak>
+      <div class="col-sm-6" ng-cloak>
+        <h2 class="m-t-5">Beløp: {{viewLoanDetails.loanDetails.loan__Loan_Amount__c | fpCurrency}}</h2>
+        <h4 class="m-t-5">Formål: {{viewLoanDetails.loanDetails.loan__Loan_Purpose__r.Name}}</h4>
+        <h4 class="m-t-5">Rente: {{viewLoanDetails.loanDetails.loan__Interest_Rate__c | fpPercentage:0}}</h4>
+        <!--   <uib-progressbar animate="false" value="viewLoanDetails.loanDetails.loan__Interest_Rate__c" type="success" class="table-cell-multline" ng-cloak>{{viewLoanDetails.loanDetails.loan__Interest_Rate__c | fpPercentage:1}}</uib-progressbar> -->
+      </div>
+      <div class="col-sm-6">
+        <form class="form-horizontal">
+          <div class="form-group">
+            <label class="col-sm-8 control-label">
+              <span>
+                        Avdrag startdato
+                    </span>
+            </label>
+            <div class="col-sm-4">
+              <p class="form-control-static">{{util.dateFormatForDetails(viewLoanDetails.loanDetails.loan__First_Installment_Date__c)}}</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-8 control-label">Avdrag sluttdato</label>
+            <div class="col-sm-4">
+              <p class="form-control-static">{{util.dateFormatForDetails(viewLoanDetails.loanDetails.loan__Last_Installment_Date__c)}}</p>
+            </div>
+          </div>
+          <span ng-hide="viewLoanDetails.loanDetails.loan__Loan_Status__c == 'Closed- Written Off' || viewLoanDetails.loanDetails.loan__Loan_Status__c == 'Closed - Refinanced' || viewLoanDetails.loanDetails.loan__Loan_Status__c == 'Closed - Premature' || viewLoanDetails.loanDetails.loan__Loan_Status__c == 'Closed - Obligations met' ">
+       <div class="form-group">
+        <label class="col-sm-8 control-label">Neste betalingsdato</label>
+        <div class="col-sm-4">
+          <p class="form-control-static">{{util.dateFormatForDetails(viewLoanDetails.loanDetails.loan__Next_Installment_Date__c)}}</p>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-8 control-label">
+          <span>
+                        
+                       Neste betaling
+                    </span>
+          </label>
+          <div class="col-sm-4">
+            <p class="form-control-static">{{viewLoanDetails.loanDetails.loan__Pmt_Amt_Cur__c |fpCurrency}}</p>
+          </div>
+      </div>
+      </span>
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 ">
+      <div class="panel panel-default">
+        <div class="panel-heading">Informasjon</div>
+        <div class="panel-body">
+          <form>
+            <div class="form-group">
+              <label>Lånets ID</label>
+              <p class="form-control-static">{{viewLoanDetails.loanDetails.Name}}</p>
+            </div>
+            <div class="form-group">
+              <label>Løpetid</label>
+              <p class="form-control-static">{{util.getTerm(viewLoanDetails.loanDetails.loan__Term_Cur__c)}}</p>
+            </div>
+            <div class="form-group">
+              <label>Startdato</label>
+              <p class="form-control-static">{{util.dateFormatForDetails(viewLoanDetails.loanDetails.loan__Disbursal_Date__c)}}</p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">Detaljer</div>
+        <div class="panel-body">
+          <form>
+            <div class="form-group">
+              <label>
+                <span>
+
+                            
+                               Status
+                            </span>
+              </label>
+              <p class="form-control-static">
+                {{util.statusTranslation(viewLoanDetails.loanDetails.loan__Loan_Status__c)}}
+              </p>
+            </div>
+            <div class="form-group">
+              <label>Tilretteleggelseskostnad</label>
+              <p class="form-control-static">{{viewLoanDetails.loanDetails.loan__Total_Pre_Paid_Fees__c |fpCurrency}}</p>
+            </div>
+            <div class="form-group">
+              <label>
+                <span>
+                            
+                              Resterende beløp
+                            </span>
+              </label>
+              <p class="form-control-static">
+                {{viewLoanDetails.loanDetails.loan__Pay_Off_Amount_As_Of_Today__c |fpCurrency}}
+              </p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

@@ -1,0 +1,34 @@
+<div class="container-fluid">
+  <div class="table-responsive fp-table-container m-t">
+    <table class="table" st-table="appliedLoans.appliedLoans" st-safe-src="appliedLoans.appliedLoansCopy">
+      <thead class="sortable-table-headings">
+        <tr>
+          <th st-sort="Name">Lånets ID</th>
+          <th st-sort="genesis__CL_Purpose__r.Name">Formål</th>
+          <th st-sort="genesis__Loan_Amount__c">Beløp</th>
+          <th st-sort="genesis__Expected_Start_Date__c">Dato</th>
+          <th st-sort="Loan_Application__r.peer__Percent_Funded__c">% Finansiert</th>
+          <th st-sort="genesis__Status__c">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="x in appliedLoans.appliedLoans" >
+          <td>{{x.Name}}</td>
+          <td>{{x.genesis__CL_Purpose__r.Name}}</td>
+          <td>{{x.genesis__Loan_Amount__c | fpCurrency}}</td>
+          <td>{{util.dateFormat(x.genesis__Expected_Start_Date__c)}}</td>
+          <td ng-show="x.Loan_Application__r.peer__Percent_Funded__c"><uib-progressbar animate="false" value="x.Loan_Application__r.peer__Percent_Funded__c" type="success" class="table-cell-multline">{{x.Loan_Application__r.peer__Percent_Funded__c |fpPercentage}}</uib-progressbar></td>
+          <td ng-hide="x.Loan_Application__r.peer__Percent_Funded__c"><uib-progressbar animate="false" value="0" type="success" class="table-cell-multline">0%</uib-progressbar></td>
+          <td>{{util.statusTranslation(x.genesis__Status__c)}}</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="8" class="text-center">
+            <div st-pagination="" st-items-by-page="10"></div>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>

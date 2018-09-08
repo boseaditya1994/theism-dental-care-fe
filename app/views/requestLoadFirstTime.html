@@ -1,0 +1,205 @@
+<div class="container-fluid ">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Søk om lån
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-10 col-lg-8">
+              <form class="form-horizontal" name="requestLoanForm" autocomplete="off">
+                <div class="form-group" ng-class="{ 'has-error' : (requestLoanForm.loanSize.$touched && requestLoanForm.loanSize.$invalid) }">
+                  <label for="loanSize" class="col-sm-4 control-label">Hvor stort lån trenger du?</label>
+                  <div class="col-sm-4" ng-class="{ 'has-error' : 
+                                         (requestLoanForm.loanSize.$touched && requestLoanForm.loanSize.$invalid)}">
+                    <!-- <input type="text" minlength="6" class="form-control" id="loanSize" name="loanSize" ng-model="requestLoanFirstTime.loanDetails.loanAmount" ng-change="requestLoanFirstTime.inputAmount()" placeholder="NOK 0" required> -->
+                    <ui-select class="custom-control" ng-model="requestLoanFirstTime.loanDetails.loanAmount" name="loanSize" id="loanSize" ng-change="requestLoanFirstTime.loanDetails.loanAmount=$select.selected.Amt__c" theme="selectize" required> 
+                      <ui-select-match placeholder="NOK 0">
+                        {{requestLoanFirstTime.loanDetails.loanAmount}}
+                      </ui-select-match>
+                      <ui-select-choices repeat="amtVal in amount | filter: $select.search" value="{{$select.selected.Amt__c}}">
+                        
+                        <span ng-bind-html="amtVal.Amt__c"></span>
+                      </ui-select-choices>
+                    </ui-select>
+                    <div ng-messages="requestLoanForm.loanSize.$error">
+                      <span class="help-block m-t-0" ng-show="requestLoanForm.loanSize.$touched && requestLoanForm.loanSize.$invalid" ng-message="required">Lånesum må fylles inn</span>
+                       <!-- <span class="help-block m-t-0" ng-message="minlength" ng-show="requestLoanForm.loanSize.$touched && !requestLoanSecondTime.invalidAmount && !requestLoanSecondTime.isAmountZero ">Lånebeløp må være større enn 100 000 kr</span> -->
+                    </div>
+                    <!-- <span class="help-block" ng-show=" requestLoanFirstTime.isAmountGreater">Lånebeløp kan ikke overskride 10 000 000 kr</span>
+                    <span class="help-block" ng-show="!requestLoanFirstTime.isAmountZero && requestLoanFirstTime.invalidAmount">Lånesum er ugyldig</span> 
+                    <span class="help-block" ng-show="requestLoanFirstTime.isAmountZero">Lånesum kan ikke være null</span>-->
+                    </div>
+                  <!-- <div class="col-sm-4 m-t-10" ng-class="{ 'has-error' : (requestLoanForm.loanTerm.$touched && requestLoanForm.loanTerm.$invalid)}">
+                    <select class="form-control" id="loanTerm" ng-model="requestLoanFirstTime.loanDetails.term" name="loanTerm" required>
+                      <option value="">- Velg -</option>
+                      <option value="6">6 mnd</option>
+                      <option value="12">1 år (12 mnd)</option>
+                      <option value="24">2 år (24 mnd)</option>
+                      <option value="36">3 år (36 mnd)</option>
+                      <option value="48">4 år (48 mnd)</option>
+                      <option value="60">5 år (60 mnd)</option>
+                    </select>
+                    <div ng-messages="requestLoanForm.loanTerm.$error">
+                      <span class="help-block" ng-show="requestLoanForm.loanTerm.$touched && requestLoanForm.loanTerm.$invalid" ng-message="required">Løpetid er påkrevd</span>
+                    </div>
+                  </div> -->
+                </div>
+
+                <div class="form-group" ng-class="{ 'has-error' :(requestLoanForm.loanTerm.$touched && requestLoanForm.loanTerm.$invalid)}">
+                  <label for="loanTerm" class="col-sm-4 control-label">Ønsket løpetid:</label>
+                  <div class="col-sm-8">
+                    <select class="form-control" id="loanTerm" ng-model="requestLoanFirstTime.loanDetails.term" name="loanTerm" required>
+                      <option value="">- Velg -</option>
+                      <option value="6">6 mnd</option>
+                      <option value="12">1 år (12 mnd)</option>
+                      <option value="24">2 år (24 mnd)</option>
+                      <option value="36">3 år (36 mnd)</option>
+                      <option value="48">4 år (48 mnd)</option>
+                      <option value="60">5 år (60 mnd)</option>
+                    </select>
+                    <div ng-messages="requestLoanForm.loanTerm.$error">
+                      <span class="help-block" ng-show="requestLoanForm.loanTerm.$touched && requestLoanForm.loanTerm.$invalid" ng-message="required">Løpetid er påkrevd</span>
+                    </div>
+                  </div>
+                </div>
+
+
+
+
+                <div class="form-group" ng-class="{ 'has-error' : requestLoanForm.companyName.$touched && requestLoanForm.companyName.$invalid}">
+                  <label class="col-sm-4 control-label" for="companyName">Firmanavn:</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="companyName" name="companyName" ng-model="requestLoanFirstTime.accountDetails.companyName" placeholder="Firmanavn" required>
+                    <div ng-messages="requestLoanForm.companyName.$error">
+                      <span class="help-block" ng-show="requestLoanForm.companyName.$touched" ng-message="required">Firmanavn er påkrevd</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : requestLoanForm.orgNo.$touched && requestLoanForm.orgNo.$invalid || (requestLoanFirstTime.accountDetails.orgName.length<9 && requestLoanForm.orgNo.$touched) || requestLoanForm.orgNo.$touched && requestLoanFirstTime.invalidOrg}">
+                  <label class="col-sm-4 control-label" for="orgNo">Organisasjonsnummer:</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="orgNo" name="orgNo" ng-model="requestLoanFirstTime.accountDetails.orgName" placeholder="Organisasjonsnummer" minlength="9" ng-change="requestLoanFirstTime.validOrgNumber(requestLoanFirstTime.accountDetails.orgName)" required>
+                     <span class="help-block" ng-show="requestLoanForm.orgNo.$touched && requestLoanFirstTime.invalidOrg && requestLoanFirstTime.accountDetails.orgName.length>=9">Organisasjonsnummer er ugyldig</span>
+                    <div ng-messages="requestLoanForm.orgNo.$error">
+                      <span class="help-block" ng-show="requestLoanForm.orgNo.$touched && requestLoanForm.orgNo.$invalid" ng-message="required">Organisasjonsnummer er påkrevd</span>
+                          <span class="help-block" ng-if="requestLoanForm.orgNo.$touched" ng-message="minlength">Organisasjonsnummer må være 9 siffer</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-4 control-label" for="signinRight" class="control-label">
+                    <span data-toggle="tooltip" uib-tooltip="Dette er et forhold som typisk er regulert gjennom selskapets vedtekter. Ta kontakt med Brønnøysundregistrene dersom du er usikker.">
+                      Person med signaturrett
+                      <i class="fa fa-question-circle" aria-hidden="true"></i>
+                    </span>
+                  </label>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : requestLoanForm.firstName.$touched && requestLoanForm.firstName.$invalid}">
+                  <label class="col-sm-4 control-label" for="firstName">Fornavn:</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="firstName" name="firstName" ng-model="requestLoanFirstTime.accountDetails.signingRightsFName" ng-pattern="/^[A-z\u00C0-\u00ff\s'\.,-\/#!$%\^&\*;:{}=\-_`~()]+$/" placeholder="Fornavn" required>
+                    <div ng-messages="requestLoanForm.firstName.$error">
+                      <span class="help-block" ng-show="requestLoanForm.firstName.$touched  && requestLoanForm.firstName.$invalid" ng-message="required">Fornavn er påkrevd</span>
+                      <span class="help-block" ng-message="pattern" ng-if="requestLoanForm.firstName.$touched && requestLoanForm.firstName.$invalid">Fornavn må være bokstaver</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : requestLoanForm.lastName.$touched && requestLoanForm.lastName.$invalid}">
+                  <label class="col-sm-4 control-label" for="lastName">Etternavn:</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="lastName" name="lastName" ng-model="requestLoanFirstTime.accountDetails.signingRightsLName" ng-pattern="/^[A-z\u00C0-\u00ff\s'\.,-\/#!$%\^&\*;:{}=\-_`~()]+$/" placeholder="Etternavn" required>
+                    <div ng-messages="requestLoanForm.lastName.$error">
+                      <span class="help-block" ng-show="requestLoanForm.lastName.$touched && requestLoanForm.lastName.$invalid" ng-message="required">Etternavn er påkrevd</span>
+                      <span class="help-block" ng-message="pattern" ng-if="requestLoanForm.lastName.$touched && requestLoanForm.lastName.$invalid">Etternavn må være bokstaver</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : (requestLoanForm.telephone.$touched && requestLoanForm.telephone.$invalid) || (requestLoanFirstTime.invalidPhoneFormat && requestLoanForm.telephone.$touched)}">
+                  <label class="col-sm-4 control-label" for="telephone">Telefonnummer:</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="telephone" name="telephone" ng-model="requestLoanFirstTime.accountDetails.signingRightsPh" ng-change="requestLoanFirstTime.isValidPhoneNumber(requestLoanFirstTime.accountDetails.signingRightsPh)" placeholder="Telefonnummer" required>
+                    <div ng-messages="requestLoanForm.telephone.$error">
+                      <span class="help-block" ng-show="requestLoanForm.telephone.$touched && requestLoanForm.telephone.$invalid" ng-message="required">Telefonnummer er påkrevd</span>
+                      <span class="help-block" ng-if="(requestLoanFirstTime.invalidPhoneFormat && requestLoanForm.telephone.$touched) && !(requestLoanForm.telephone.$touched && requestLoanForm.telephone.$invalid)">Telefonnummeret er ugyldig</span>
+                    </div>
+                  </div>
+                </div>
+
+                 <div class="form-group" ng-class="{ 'has-error' : (requestLoanForm.personalIDNumber.$touched && requestLoanForm.personalIDNumber.$invalid && requestLoanFirstTime.invalidIdFormat) || (requestLoanFirstTime.invalidpersonalID && requestLoanForm.personalIDNumber.$touched) || (requestLoanForm.personalIDNumber.$touched && requestLoanForm.personalIDNumber.$invalid) }">
+                  <label class="col-sm-4 control-label" for="personalIdNumber">
+                    <span data-toggle="tooltip" uib-tooltip="Vi ber om ditt fødsels- og personnummer som en del av vår verifiseringsprosess. Denne informasjonen vil også benyttes når vi gjør innrapportering til Skatteetaten, slik at din inntekt og formue hos FundingPartner automatisk dukker opp i selvangivelsen. Dine personlige opplysninger vil aldri spres til andre og vil bli lagret på en sikker måte.">
+                      Fødsels- og personnummer:
+                      <i class="fa fa-question-circle" aria-hidden="true"></i>
+                    </span>
+                  </label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="personalIDNumber" name="personalIDNumber" ng-model="requestLoanFirstTime.accountDetails.signingRightsSSN" ng-change="requestLoanFirstTime.isValidPersonalId()" placeholder="Fødsels- og personnummer" ng-blur="requestLoanFirstTime.getValidPersonalIDNumber(requestLoanFirstTime.accountDetails.signingRightsSSN)" required>
+                    <div ng-messages="requestLoanForm.personalIDNumber.$error">
+                    <span class="help-block" ng-if="requestLoanForm.personalIDNumber.$touched && requestLoanForm.personalIDNumber.$invalid" ng-message="required">Fødsels- og personnummer er påkrevd</span>
+
+                      <span class="help-block" ng-if="requestLoanForm.personalIDNumber.$touched && requestLoanForm.personalIDNumber.$invalid && requestLoanFirstTime.invalidIdFormat ">Fødsels- og personnummer må være tall</span>
+                      <span class="help-block" ng-if="requestLoanFirstTime.invalidpersonalID && requestLoanForm.personalIDNumber.$touched && !(requestLoanForm.personalIDNumber.$invalid && requestLoanFirstTime.invalidIdFormat )">Personnummer er ugyldig</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-4 control-label" for="multiplePeopleRequired" class="control-label">
+                    <span data-toggle="tooltip" uib-tooltip="Signaturrett betyr hvem som har myndighet til å opptre og signere på dokumenter på vegne av selskapet. Dette står i firmaattesten og er ofte enten daglig leder eller styrets leder alene. Hvis det er flere som har signaturrett sammen må det krysses av her.">Kreves det mer enn én person for å signere for selskapet?
+                                        <i class="fa fa-question-circle" aria-hidden="true"></i>
+                                        </span>
+                  </label>
+                  <div class="checkbox">
+                    <div class="col-sm-8">
+                      <label>
+                        <input type="checkbox" id="multiplePeopleRequired" name="multiplePeopleRequired" ng-model="requestLoanFirstTime.accountDetails.multiplePeopleRequired"> Trykk hvis ja</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : requestLoanForm.loanType.$touched && requestLoanForm.loanType.$invalid}">
+                  <label class="col-sm-4 control-label" for="loanType">Formål med lånet:</label>
+                  <div class="col-sm-8">
+                    <select class="form-control" id="loanType" ng-model="requestLoanFirstTime.loanDetails.loanType" name="loanType" required>
+                      <option value="">- Trykk for alternativer -</option>
+                      <option value="Vekstkapital/Ekspansjonskapital">Vekstkapital/Ekspansjonskapital</option>
+                      <option value="Arbeidskapital">Arbeidskapital</option>
+                      <option value="Produksjonsutstyr">Produksjonsutstyr</option>
+                      <option value="Brolån">Brolån</option>
+                      <option value="Annet">Annet</option>
+                    </select>
+                    <div ng-messages="requestLoanForm.loanType.$error">
+                      <span class="help-block" ng-show="requestLoanForm.loanType.$touched " ng-message="required">Dette feltet er påkrevd</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : requestLoanForm.loanReason.$touched && requestLoanForm.loanReason.$invalid}">
+                  <label class="col-sm-4 control-label" for="phone">Hva skal lånet brukes til?</label>
+                  <div class="col-sm-8">
+                    <textarea type="text" class="form-control" id="loanReason" name="loanReason" rows="3" ng-model="requestLoanFirstTime.loanDetails.whatIsTheLoanFor" maxlength="10000" placeholder="Skriv her" required></textarea>
+                    <div ng-messages="requestLoanForm.loanReason.$error">
+                      <span class="help-block" ng-show="requestLoanForm.loanReason.$touched && requestLoanForm.loanReason.$invalid" ng-message="required">Bakgrunn for lånebehov</span>
+                      <span class="help-block" ng-show="requestLoanForm.loanReason.$touched && requestLoanForm.loanReason.$invalid" ng-message="maxlength">Formål kan være maks 10000 tegn</span>
+                    </div>
+                  </div>
+                </div>
+               
+                <div class="form-group">
+                  <label class="col-sm-4 control-label" for="discountCode">Rabattkode:</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="discountCode" name="discountCode" ng-model="requestLoanFirstTime.loanDetails.discountCode" placeholder="Valgfritt">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-xs-12 col-sm-offset-4 col-sm-8">
+                    <button type="submit" class="btn btn-primary btn-block" ng-click="requestLoanFirstTime.requestLoan()" ng-disabled="requestLoanFirstTime.disableSubmit()" double-Click>Registrer og send forespørsel</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,278 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-6 col-lg-5">
+      <div class="panel panel-default">
+        <div class="panel-heading">Kontosammendrag</div>
+        <div class="panel-body summary-list-container">
+          <div class="summary-list-with-heading">
+            <div class="row">
+              <div class="col-sm-8 col-xs-12">Totale eiendeler:</div>
+              <div class="col-sm-4 col-xs-12">{{investorSummary.details.data.investorDetails[0].peer__Portfolio_Amount__c| fpCurrency}}</div>
+            </div>
+            <div class="row">
+              <div class="col-sm-8 col-xs-12">Investeringer:</div>
+              <div class="col-sm-4 col-xs-12">{{investorSummary.details.data.investorDetails[0].peer__Total_remaining_Investment__c | fpCurrency }}</div>
+            </div>
+            <div class="row">
+              <div class="col-sm-8 col-xs-12">Tilgjengelige midler:</div>
+              <div class="col-sm-4 col-xs-12">{{investorSummary.details.data.investorDetails[0].peer__Funds_Available_For_Investment__c | fpCurrency}}</div>
+            </div>
+            <div class="row">
+              <div class="col-sm-8 col-xs-12">Reservert beløp:</div>
+              <div class="col-sm-4 col-xs-12">{{investorSummary.details.data.investorDetails[0].peer__Amount_In_Funding__c | fpCurrency }}</div>
+            </div>
+          </div>
+          <div class="summary-list-with-heading">
+            <div class="row">
+              <div class="col-sm-8 col-xs-12">Investeringsstatistikk:</div>
+              <div class="col-sm-4 col-xs-12"></div>
+            </div>
+            <div class="row">
+              <div class="col-sm-8 col-xs-12">Brutto avkastning:</div>
+              <div class="col-sm-4 col-xs-12">{{investorSummary.details.data.investorDetails[0].Gross_Portfolio_Yield__c | fpPercentage:1}}</div>
+            </div>
+            <div class="row">
+              <div class="col-sm-8 col-xs-12">Antall aktive lån:</div>
+              <div class="col-sm-4 col-xs-12">{{investorSummary.details.data.activeLoanCount | number }}</div>
+            </div>
+          </div>
+          <div class="summary-list-with-heading">
+            <div class="row">
+              <div class="col-sm-8 col-xs-12">Historisk avkastning:</div>
+              <div class="col-sm-4 col-xs-12"></div>
+            </div>
+            <div class="row">
+              <div class="col-sm-8 col-xs-12">I kroner:</div>
+              <div class="col-sm-4 col-xs-12">{{investorSummary.details.data.investorDetails[0].Total_Interest_Return__c | fpCurrency }}</div>
+            </div>
+            <div class="row">
+              <div class="col-sm-8 col-xs-12">Nettoavkastning i prosent:</div>
+              <div class="col-sm-4 col-xs-12">{{investorSummary.details.data.investorDetails[0].Net_Return_in__c| fpPercentage:1}}</div>
+            </div>
+            <div class="row">
+              <div class="col-sm-8 col-xs-12">Totalt antall lån:</div>
+              <div class="col-sm-4 col-xs-12">{{investorSummary.details.data.totalNumberOfLoans | number}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-7">
+      <div class="panel panel-default h-360">
+        <div class="panel-heading">Kontooversikt</div>
+        <div ng-show="investorSummary.isChartDetails && investorSummary.isChartVisible" id="container" class="piechart">
+        </div>
+        <div ng-show="!investorSummary.isChartDetails && investorSummary.isChartVisible">
+          <img src="images/graphPlaceholder.png" class="img-responsive w-100-h-305">
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Mine kjøpsordre
+          <div class="pull-right header-dropdown w-180-m-l-44">
+            <ui-select ng-model="investorSummary.bidTypeSelected" theme="selectize" class="panel-heading-dropdown" search-enabled="false">
+              <ui-select-match placeholder="Kjøpsordre">
+                <i class="fa fa-circle " ng-class="$select.selected.cssClass"></i>
+                <span ng-bind="$select.selected.name"></span>
+              </ui-select-match>
+              <ui-select-choices repeat="bidType in investorSummary.bidTypes"  ng-click="investorSummary.filterbidParts(investorSummary.bidTypeSelected)">
+                <i class="fa fa-circle " ng-class="bidType.cssClass"></i>
+                <span ng-bind-html="bidType.name"></span>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+        </div>
+        <div class="table-responsive fp-table-container m-t">
+          <table class="table w_1170" st-table="investorSummary.bidPartsCopy" st-safe-src="investorSummary.bidParts">
+            <thead class="sortable-table-headings">
+              <tr>
+                <th st-sort="peer__Loan_Application__r.Loan_Title__c">Lån</th>
+                <th st-sort="peer__Credit_Band_Allocation__r.Name" class="t-a-c">
+                  <span data-toggle="tooltip" uib-tooltip="Alle lån deles inn i kredittklasser fra A-D, hvor A indikerer lavest risiko." tooltip-placement="auto right">
+                            Kredittklasse
+                            <i class="fa fa-question-circle" aria-hidden="true"></i>
+                        </span>
+                </th>
+                <th st-sort="peer__Loan_Application__r.peer__Percent_Funded__c">
+                  <span data-toggle="tooltip" uib-tooltip="Prosentvis andel av låneforespørselen som er tegnet." tooltip-placement="auto right">
+                            %&nbsp;Finansiert
+                            <i class="fa fa-question-circle" aria-hidden="true"></i>
+                        </span>
+                </th>
+                <th st-sort="peer__Loan_Application__r.peer__Requested_Loan_Amount__c">
+                  <span data-toggle="tooltip" uib-tooltip="Beløpet du har tilbudt deg å låne til låntakeren." tooltip-placement="auto right">
+                            Beløp
+                            <i class="fa fa-question-circle" aria-hidden="true"></i>
+                        </span>
+                </th>
+                <th st-sort="peer__Loan_Application__r.peer__Interest_Rate__c">
+                  <span data-toggle="tooltip" uib-tooltip="Bruttorente som låntaker vil betale på lånet." tooltip-placement="auto right">
+                            Rente
+                            <i class="fa fa-question-circle" aria-hidden="true"></i>
+                        </span>
+                </th>
+                <th st-sort="peer__Loan_Application__r.peer__Term__c">
+                  <span>Løpetid</span>
+                </th>
+                <th st-sort="peer__Loan_Application__r.timeLeftInMinutes" st-sort-default="true">Tid igjen</th>
+                <th st-sort="peer__Loan_Application__r.peer__Stage__c">
+                  <span data-toggle="tooltip" uib-tooltip="Dette feltet indikerer hvorvidt budet ditt har blitt avvist eller om det fremdeles er live. " tooltip-placement="auto left">
+                            Status
+                            <i class="fa fa-question-circle" aria-hidden="true"></i>
+                        </span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="x in investorSummary.bidPartsCopy | filter:investorSummary.bidFilter">
+                <td>
+                  <span class="table-cell-multline">
+                        <a ng-show="x.peer__Loan_Application__r.Loan_Title__c" href="" ui-sref="loan({loanId: x.peer__Loan_Application__c})">{{x.peer__Loan_Application__r.Loan_Title__c}}</a>
+                        <a ng-show="!x.peer__Loan_Application__r.Loan_Title__c" href="">Uten navn</a>
+                    </span> {{x.peer__Loan_Application__r.peer__Borrower__r.BillingCity}} {{x.peer__Loan_Application__r.peer__Borrower__r.BillingCountry}} {{x.peer__Loan_Application__r.peer__Borrower__r.BillingPostalCode}} {{x.peer__Loan_Application__r.peer__Borrower__r.BillingState}} {{x.peer__Loan_Application__r.peer__Borrower__r.BillingStreet}}
+                </td>
+                <td class="t-a-c">{{x.peer__Credit_Band_Allocation__r.Name}}</td>
+                <td class="t-a-l">
+                  <uib-progressbar animate="false" value="x.peer__Loan_Application__r.peer__Percent_Funded__c" type="success" class="table-cell-multline"></uib-progressbar>
+                  {{x.peer__Loan_Application__r.peer__Percent_Funded__c |fpPercentage:1 }}
+                </td>
+                <td>{{x.peer__Investment_Amount__c | fpMyBidPartsCurrency}}</td>
+                <td>{{x.peer__Loan_Application__r.peer__Interest_Rate__c |fpPercentage:1 }}</td>
+                <td>{{util.getTerm(x.peer__Loan_Application__r.peer__Term__c)}}</td>
+                <td>{{util.timeLeft(x.peer__Loan_Application__r.timeLeft)}}</td>
+                <td><span ng-bind-html="x.peer__Loan_Application__r.peer__Stage__c | fpBidStatus"></span></td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="8" class="text-center">
+                  <div st-pagination="10" st-items-by-page="10"></div>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Mine investeringer/lån
+          <div class="pull-right header-dropdown">
+            <ui-select ng-model="investorSummary.loanTypeSelected" theme="selectize" class="panel-heading-dropdown" search-enabled="false">
+              <ui-select-match placeholder="Velg type lån">
+                {{$select.selected.name}}
+              </ui-select-match>
+              <ui-select-choices  ng-click="investorSummary.filterloanParts(investorSummary.loanTypeSelected)" repeat="loanType in investorSummary.loanTypes">
+                <span ng-bind-html="loanType.name"></span>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+        </div>
+        <div class="table-responsive fp-table-container m-t">
+          <table class="table w_1173" st-table="investorSummary.loanPartsCopy" st-safe-src="investorSummary.loanParts">
+            <thead class="sortable-table-headings">
+              <tr>
+                <th st-sort="x.loan__Loan__r.Loan_Title__c">Lån</th>
+                <th st-sort="Loan_Parts__c">
+                  <span data-toggle="tooltip" uib-tooltip="Antall låneandeler du har i lånet." tooltip-placement="auto right">
+                                        Andel i lån
+                                        <i class="fa fa-question-circle" aria-hidden="true"></i>
+                                    </span>
+                </th>
+                <th st-sort="peer__Credit_Band_Allocation__r.Name">
+                  <span data-toggle="tooltip" uib-tooltip="Alle lån deles inn i kredittklasser fra A-D, hvor A indikerer lavest risiko. " tooltip-placement="auto right">
+
+                                        Kredittklasse
+                                        <i class="fa fa-question-circle" aria-hidden="true"></i>
+                                    </span>
+                </th>
+                <th st-sort="loan__Loan__r.Months_Left__c">
+                  <span data-toggle="tooltip" uib-tooltip="Antallet månedlige avbetalinger som gjenstår på lånet." tooltip-placement="auto right">
+                                         Gjenværende betalinger
+                                        <i class="fa fa-question-circle" aria-hidden="true"></i>
+                                    </span>
+                </th>
+                <th st-sort="loan__Loan__r.loan__Principal_Remaining__c" ng-show="investorSummary.loanTypeSelected.name=='Aktive lån' || investorSummary.loanTypeSelected.name=='Alle lån'">
+                  <span data-toggle="tooltip" uib-tooltip="Resterende beløp som fremdeles gjenstår på lånet. Hver måned mottar du vanligvis en avbetaling som inkluderer både rente og avdrag." tooltip-placement="auto right">
+                                        Resterende beløp
+                                        <i class="fa fa-question-circle" aria-hidden="true"></i>
+                                    </span>
+                </th>
+                <th st-sort="loan__Loan__r.loan__Principal_Remaining__c" ng-show="investorSummary.loanTypeSelected.name=='Arkiverte lån' || investorSummary.loanTypeSelected.name=='Alle lån'">
+                                        Effektiv rente
+                </th>
+                <th st-sort="loan__Loan__r.loan__Interest_Rate__c">
+                  <span data-toggle="tooltip" uib-tooltip="Renten du mottar fra låntakeren." tooltip-placement="auto right">
+                                        Rente
+                                        <i class="fa fa-question-circle" aria-hidden="true"></i>
+                                    </span>
+                </th>
+                <th st-sort="loan__Loan__r.loan__Next_Installment_Date__c" st-sort-default="true" ng-show="investorSummary.loanTypeSelected.name=='Aktive lån' || investorSummary.loanTypeSelected.name=='Alle lån'">
+                  <span data-toggle="tooltip" uib-tooltip="Dato for neste utbetaling." tooltip-placement="auto right">
+                                        Dato
+                                        <i class="fa fa-question-circle" aria-hidden="true"></i>
+                                    </span>
+                </th>
+                <th st-sort="" ng-show="investorSummary.loanTypeSelected.name=='Arkiverte lån' || investorSummary.loanTypeSelected.name=='Alle lån'">
+                                        Opptjening
+                </th>
+                <th st-sort="loan__Loan__r.loan__Loan_Status__c">
+                  <span data-toggle="tooltip" uib-tooltip="Dette feltet indikerer hvorvidt lånet avbetales i tide, har gått glipp av en betaling, eller er misligholdt." tooltip-placement="auto left">
+                                        Status
+                                        <i class="fa fa-question-circle" aria-hidden="true"></i>
+                                    </span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="x in investorSummary.loanPartsCopy | filter : investorSummary.loanFilter">
+                <td>
+                  <span class="table-cell-multline">
+                                        <a ng-show="x.loan__Loan__r.Loan_Title__c" href="" ui-sref="loan({loanId: x.loan__Loan__r.Loan_Application__c})">{{x.loan__Loan__r.Loan_Title__c}} </a>
+                                        <a ng-show="!x.loan__Loan__r.Loan_Title__c" href="">Uten navn</a>
+                                    </span> {{x.loan__Loan__r.loan__Account__r.BillingStreet}} {{x.loan__Loan__r.loan__Account__r.BillingCity}} {{x.loan__Loan__r.loan__Account__r.BillingPostalCode}} {{x.loan__Loan__r.loan__Account__r.BillingState}} {{x.loan__Loan__r.loan__Account__r.BillingCountry}}
+                </td>
+                <td>{{x.peer__Number_of_Shares__c}}</td>
+                <td>
+                  {{x.peer__Credit_Band_Allocation__r.Name}}
+                </td>
+                <td>
+                <span ng-show="(x.loan__Loan__r.loan__Loan_Status__c == 'Active - Good Standing' || x.loan__Loan__r.loan__Loan_Status__c == 'Active - Bad Standing')">{{x.loan__Loan__r.Months_Left__c}}</span>
+                <span ng-show="(x.loan__Loan__r.loan__Loan_Status__c == 'Closed - Obligations met' || x.loan__Loan__r.loan__Loan_Status__c == 'Closed- Written Off' || x.loan__Loan__r.loan__Loan_Status__c == 'Closed - Refinanced')"> - </span>
+                </td>
+                <td ng-show="investorSummary.loanTypeSelected.name=='Aktive lån' || investorSummary.loanTypeSelected.name=='Alle lån'">
+                <span ng-show="(x.loan__Loan__r.loan__Loan_Status__c == 'Active - Good Standing' || x.loan__Loan__r.loan__Loan_Status__c == 'Active - Bad Standing')">{{x.loan__Loan__r.loan__Principal_Remaining__c | fpMyBidPartsCurrency}}</span>
+                <span ng-show="(x.loan__Loan__r.loan__Loan_Status__c == 'Closed - Obligations met' || x.loan__Loan__r.loan__Loan_Status__c == 'Closed- Written Off' || x.loan__Loan__r.loan__Loan_Status__c == 'Closed - Refinanced')">-</span>
+                </td>
+                <td ng-show="investorSummary.loanTypeSelected.name=='Arkiverte lån' || investorSummary.loanTypeSelected.name=='Alle lån'">
+                <span ng-show="(x.loan__Loan__r.loan__Loan_Status__c == 'Closed - Obligations met' || x.loan__Loan__r.loan__Loan_Status__c == 'Closed- Written Off' || x.loan__Loan__r.loan__Loan_Status__c == 'Closed - Refinanced')">{{x.Rate_of_Earning__c}}</span>
+                <span ng-show="(x.loan__Loan__r.loan__Loan_Status__c == 'Active - Good Standing' || x.loan__Loan__r.loan__Loan_Status__c == 'Active - Bad Standing')">-</span>
+                </td>
+                <td>{{x.loan__Loan__r.loan__Interest_Rate__c | fpPercentage:1}}</td>
+                <td ng-show="investorSummary.loanTypeSelected.name=='Aktive lån' || investorSummary.loanTypeSelected.name=='Alle lån'">
+                <span ng-show="(x.loan__Loan__r.loan__Loan_Status__c == 'Active - Good Standing' || x.loan__Loan__r.loan__Loan_Status__c == 'Active - Bad Standing')">        {{x.loan__Loan__r.loan__Next_Installment_Date__c | date:"dd.MM.yy"}}</span>
+                <span ng-show="(x.loan__Loan__r.loan__Loan_Status__c == 'Closed - Obligations met' || x.loan__Loan__r.loan__Loan_Status__c == 'Closed- Written Off' || x.loan__Loan__r.loan__Loan_Status__c == 'Closed - Refinanced')"> - </span>
+                </td>
+                <td ng-show="investorSummary.loanTypeSelected.name=='Arkiverte lån' || investorSummary.loanTypeSelected.name=='Alle lån'">
+                <span ng-show="(x.loan__Loan__r.loan__Loan_Status__c == 'Closed - Obligations met' || x.loan__Loan__r.loan__Loan_Status__c == 'Closed- Written Off' || x.loan__Loan__r.loan__Loan_Status__c == 'Closed - Refinanced')">{{x.Earning__c}}</span>
+                <span ng-show="(x.loan__Loan__r.loan__Loan_Status__c == 'Active - Good Standing' || x.loan__Loan__r.loan__Loan_Status__c == 'Active - Bad Standing')">-</span>
+                </td>
+                <td>{{x.loan__Loan__r.loan__Loan_Status__name}}</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="10" class="text-center">
+                  <div st-pagination="" st-items-by-page="10"></div>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

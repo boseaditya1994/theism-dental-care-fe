@@ -1,0 +1,127 @@
+﻿<div class="container-fluid ">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Min profil
+        </div>
+        <div class="panel-body">
+          <form class="form-horizontal" name="ctrl.userForm">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="col-sm-4 control-label">Fornavn</label>
+                  <div class="col-sm-8">
+                    <p class="form-control-static">{{myProfile.profileForm.firstName}}</p>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-4 control-label">Etternavn</label>
+                  <div class="col-sm-8">
+                    <p class="form-control-static">{{myProfile.profileForm.lastName}}</p>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-4 control-label">E-post</label>
+                  <div class="col-sm-8">
+                    <p class="form-control-static">{{myProfile.profileForm.email}}</p>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-4 control-label">Adresse</label>
+                  <div class="col-sm-8">
+                    <p class="form-control-static">{{myProfile.profileForm.address}}</p>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-4 control-label">Postnummer</label>
+                  <div class="col-sm-8">
+                    <p class="form-control-static">{{myProfile.profileForm.postalCode}}</p>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-4 control-label">Poststed</label>
+                  <div class="col-sm-8">
+                    <p class="form-control-static">{{myProfile.profileForm.postalPlace}}</p>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-4 control-label">Land</label>
+                  <div class="col-sm-8">
+                    <p class="form-control-static">{{myProfile.profileForm.country}}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="col-sm-4 control-label">Telefonnummer</label>
+                  <div class="col-sm-8">
+                    <p class="form-control-static">{{myProfile.telephone}}</p>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-4 control-label">Fødsels- og personnummer</label>
+                  <div class="col-sm-8">
+                    <p class="form-control-static">{{myProfile.profileForm.personalIDNumber}}</p>
+                  </div>
+                </div>
+                <div class="form-group" ng-show="typeOfApplicant=='Investor'">
+                  <label class="col-sm-4 control-label">Bankkonto</label>
+                  <div class="col-sm-8">
+                    <p class="form-control-static">{{myProfile.bankAccount}}</p>
+                  </div>
+                </div>
+                <div class="form-group" ng-show="typeOfApplicant=='Investor'">
+                  <label class="col-sm-4 control-label">Formål med investering</label>
+                  <div class="col-sm-8">
+                    <p class="form-control-static">{{myProfile.purpose_of_the_savings}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-12 col-sm-6 col-md-3 col-md-offset-9">
+                <button type="button" ui-sref="editMyProfile" class="btn btn-primary btn-block">Endre</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div ng-class="typeOfApplicant=='Borrower' ? 'col-sm-12' : 'col-sm-6' ">
+      <div class="panel panel-default">
+        <div class="panel-heading">Passord</div>
+        <div class="panel-body">
+          <p ng-show="myProfile.profileForm.passwordLastchangedOn">Passord sist endret {{myProfile.dateFormat(myProfile.profileForm.passwordLastchangedOn)}}</p>
+          <div class="row">
+            <div class="col-xs-12 col-md-6 col-md-offset-3">
+              <button type="button" class="btn btn-primary btn-block" ng-click="ctrl.changePassword()">
+                Endre passord
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+ <div class="col-sm-6" ng-hide="typeOfApplicant=='Borrower'">
+      <div class="panel panel-default">
+        <div class="panel-heading">Juridisk informasjon: Personopplysninger</div>
+        <div class="panel-body">
+          <p>
+            FundingPartner AS har iht lov om tiltak mot hvitvasking, terrorfinansiering mv. samt andre lover og forskrifter, behov for å hente inn en del personopplysninger om personer som investerer eller står bak juridiske selskaper som investerer. Disse personopplysningene vil ikke bli utlevert til andre virksomheter.
+          </p>
+          <p>
+            Dine personopplysninger ble sist endret {{ctrl.user.legalInfoLastChangedDate | date:'dd.MM.yyyy'}}.
+          </p>
+          <div class="row">
+            <div class="col-xs-12 col-md-6 col-md-offset-3">
+              <button type="button" class="btn btn-primary btn-block" ng-click="myProfile.changeLegalInformation()">
+                Endre personopplysninger
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> 
+  </div>
+</div>

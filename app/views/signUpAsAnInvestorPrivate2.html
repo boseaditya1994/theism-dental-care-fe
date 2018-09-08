@@ -1,0 +1,114 @@
+<div class="container-fluid ">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Registrer deg som investor
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <form class="form-horizontal" name="signUpAsAnInvestorPrivateForm" autocomplete="off">
+              <div class="col-md-10 col-lg-8">
+                <div class="form-group" ng-class="{ 'has-error' : signUpAsAnInvestorPrivateForm.howOftenDoYouWantToInvestInLoans.$touched && signUpAsAnInvestorPrivateForm.howOftenDoYouWantToInvestInLoans.$invalid}">
+                  <label for="howOftenDoYouWantToInvestInLoans" class="col-sm-5 control-label">Hvor ofte ønsker du å investere i lån?</label>
+                  <div class="col-sm-7">
+                    <select class="form-control" id="howOftenDoYouWantToInvestInLoans" name="howOftenDoYouWantToInvestInLoans" ng-model="signUpAsInvestorPrivate2.form.How_often_do_you_want_to_invest" required>
+                      <option value="">- Trykk for alternativer -</option>
+                      <option value="Weekly">Ukentlig</option>
+                      <option value="Monthly">Månedlig</option>
+                      <option value="Quarterly">Kvartalsvis</option>
+                      <option value="Individually">Enkeltvis</option>
+                    </select>
+                    <div ng-messages="signUpAsAnInvestorPrivateForm.howOftenDoYouWantToInvestInLoans.$error">
+                      <span class="help-block" ng-message="required" ng-if="signUpAsAnInvestorPrivateForm.howOftenDoYouWantToInvestInLoans.$touched && signUpAsAnInvestorPrivateForm.howOftenDoYouWantToInvestInLoans.$invalid">Dette feltet er påkrevd</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : signUpAsAnInvestorPrivateForm.whatInvestmentHorizonDoYouHave.$touched && signUpAsAnInvestorPrivateForm.whatInvestmentHorizonDoYouHave.$invalid}">
+                  <label class="col-sm-5 control-label" for="whatInvestmentHorizonDoYouHave">Hvilken investeringshorisont har du?</label>
+                  <div class="col-sm-7">
+                    <select class="form-control" id="whatInvestmentHorizonDoYouHave" name="whatInvestmentHorizonDoYouHave" ng-model="signUpAsInvestorPrivate2.form.What_investment_horizon" required>
+                      <option value="">- Trykk for alternativer -</option>
+                      <option value="1 year">Under 1 år</option>
+                      <option value="1-5 years">1-5 år</option>
+                      <option value="more than 5 years">Mer enn 5 år</option>
+                    </select>
+                    <div ng-messages="signUpAsAnInvestorPrivateForm.whatInvestmentHorizonDoYouHave.$error">
+                      <span class="help-block" ng-message="required" ng-if="signUpAsAnInvestorPrivateForm.whatInvestmentHorizonDoYouHave.$touched && signUpAsAnInvestorPrivateForm.whatInvestmentHorizonDoYouHave.$invalid">Dette feltet er påkrevd</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : signUpAsAnInvestorPrivateForm.whatIsThePurposeOfYourSavings.$touched && signUpAsAnInvestorPrivateForm.whatIsThePurposeOfYourSavings.$invalid}">
+                  <label class="col-sm-5 control-label" for="whatIsThePurposeOfYourSavings" class="control-label">Hva er formålet med sparingen din?</label>
+                  <div class="col-sm-7">
+                    <select class="form-control" id="whatIsThePurposeOfYourSavings" name="whatIsThePurposeOfYourSavings" ng-model="signUpAsInvestorPrivate2.form.purpose" required>
+                      <option value="">- Trykk for alternativer -</option>
+                      <option value="Return on capital">Avkastning på kapital</option>
+                      <option value="Risk diversification">Risikospredning</option>
+                      <option value="Help small businesses">Hjelpe småbedrifter</option>
+                      <option value="Other">Annet</option>
+                    </select>
+                    <div ng-messages="signUpAsAnInvestorPrivateForm.whatIsThePurposeOfYourSavings.$error">
+                      <span class="help-block" ng-show="signUpAsAnInvestorPrivateForm.whatIsThePurposeOfYourSavings.$touched && signUpAsAnInvestorPrivateForm.whatIsThePurposeOfYourSavings.$invalid" ng-message="required">Dette feltet er påkrevd</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : signUpAsAnInvestorPrivateForm.whereDoesTheMoneyYouInvestComesFrom.$touched && signUpAsAnInvestorPrivateForm.whereDoesTheMoneyYouInvestComesFrom.$invalid}">
+                  <label class="col-sm-5 control-label" for="whereDoesTheMoneyYouInvestComesFrom" class="control-label">Hvor kommer pengene du investerer fra?</label>
+                  <div class="col-sm-7">
+                    <select class="form-control" id="whereDoesTheMoneyYouInvestComesFrom" name="whereDoesTheMoneyYouInvestComesFrom" ng-model="signUpAsInvestorPrivate2.form.WhereDoesTheMoneyComesFrom" required>
+                      <option value="">- Trykk for alternativer -</option>
+                      <option value="Salary / Pension">Lønn/Pensjon</option>
+                      <option value="Heritage">Arv</option>
+                      <option value="Investments">Investeringer</option>
+                      <option value="Property Sales">Eiendomssalg</option>
+                      <option value="Other">Annet</option>
+                    </select>
+                    <div ng-messages="signUpAsAnInvestorPrivateForm.whereDoesTheMoneyYouInvestComesFrom.$error">
+                      <span class="help-block" ng-show="signUpAsAnInvestorPrivateForm.whereDoesTheMoneyYouInvestComesFrom.$touched && signUpAsAnInvestorPrivateForm.whereDoesTheMoneyYouInvestComesFrom.$invalid" ng-message="required">Dette feltet er påkrevd</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-5 control-label" for="AreYouAUSCitizenOrTaxableToTheUnitedStates">Er du amerikansk statsborger eller skattepliktig til USA?</label>
+                  <div class="col-sm-7">
+                    <div class="checkbox">
+                      <label>
+                        <input type="checkbox" id="postalPlace" ng-model="signUpAsInvestorPrivate2.form.USCitizen">Trykk hvis ja</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-5 control-label" for="postalCode">
+                    <span data-toggle="tooltip" uib-tooltip="Det er et lovkrav at finansielle virksomheter registrerer om en person er politisk eksponert. Politisk eksponerte personen (PEP) omfatter personer som har eller har hatt en høyere politisk post eller vært toppembetsmann. Personer ansatt I regionale eller kommunale stilliner er ikke omfattet av begrepet. Reglene omfatter også nære familiemedlemmer og andre nærstående parter til PEPs.">
+                                            Har du selv, eller et nært familiemedlem eller en kjent medarbeider noen gang vært en politisk eksponert person?
+                                            <i class="fa fa-question-circle" aria-hidden="true"></i>
+                                        </span>
+                  </label>
+                  <div class="col-sm-7">
+                    <div class="checkbox">
+                      <label>
+                        <input type="checkbox" id="postalPlace" ng-model="signUpAsInvestorPrivate2.form.politicallyExposed">Trykk hvis ja</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12 col-lg-12">
+                <div class="col-sm-12 b-c-g c-w">
+                  FundingPartner AS har iht lov om tiltak mot hvitvasking, terrorfinansiering mv. samt andre lover og forskrifter, behov for å hente inn en del personopplysninger om personer som investerer eller står bak juridiske selskaper som investerer. Disse personopplysningene vil ikke bli utlevert til andre virksomheter. Brukeren kan selv oppdatere disse senere gjennom brukerprofilen hos FundingPartner.
+                </div>
+              </div>
+              <div class="col-md-10 col-lg-8">
+                <div class="form-group">
+                  <div class="col-xs-12 col-sm-offset-4 col-sm-8 p-t-15">
+                    <button type="submit" class="btn btn-primary btn-block" ng-click="signUpAsInvestorPrivate2.continue()" ng-disabled="signUpAsInvestorPrivate2.disableContinue()" double-Click>Fortsett</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

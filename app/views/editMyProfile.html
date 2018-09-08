@@ -1,0 +1,154 @@
+﻿<div class="container-fluid" ng-cloak>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Endre profil
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-10 col-lg-8">
+              <form class="form-horizontal" name="userForm" novalidate ng-submit="userForm.$valid && editProfile.saveChanges()" autocomplete="off">
+                <div class="form-group" ng-class="{ 'has-error' : (userForm.firstName.$dirty ||userForm.$submitted) && userForm.firstName.$invalid }">
+                  <label for="firstName" class="col-sm-4 control-label">Fornavn:</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="firstName" name="firstName" ng-model="editProfile.editForm.firstName" ng-pattern="/^[A-z\u00C0-\u00ff\s'\.,-\/#!$%\^&\*;:{}=\-_`~()]+$/" placeholder="Fornavn" required>
+                    <span class="help-block" ng-show="(userForm.firstName.$dirty || userForm.$submitted) && userForm.firstName.$error.required">
+                                        Fornavn er påkrevd
+                                    </span>
+                    <span class="help-block" ng-show="(userForm.firstName.$dirty || userForm.$submitted) && userForm.firstName.$error.pattern">
+                                        Fornavn må være bokstaver
+                                    </span>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : (userForm.lastName.$dirty ||userForm.$submitted) && userForm.lastName.$invalid }">
+                  <label class="col-sm-4 control-label" for="lastName">Etternavn:</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="lastName" name="lastName" ng-model="editProfile.editForm.lastName" ng-pattern="/^[A-z\u00C0-\u00ff\s'\.,-\/#!$%\^&\*;:{}=\-_`~()]+$/" placeholder="Etternavn" required>
+                    <span class="help-block" ng-show="(userForm.lastName.$dirty || userForm.$submitted) && userForm.lastName.$error.required">
+                                        Etternavn er påkrevd
+                                    </span>
+                    <span class="help-block" ng-show="(userForm.lastName.$dirty || userForm.$submitted) && userForm.lastName.$error.pattern">
+                                        Etternavn må være bokstaver
+                                    </span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-4 control-label" for="email">E-post:</label>
+                  <div class="col-sm-8">
+                    <input type="email" class="form-control" id="email" name="email" ng-model="editProfile.editForm.email" placeholder="E-post" disabled>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : userForm.address.$touched && userForm.address.$invalid}">
+                  <label class="col-sm-4 control-label" for="address" class="control-label">Adresse:</label>
+                  <div class="col-sm-8">
+                    <textarea type="text" class="form-control" id="address" name="address" ng-model="editProfile.editForm.address" rows="2" placeholder="Adresse" required></textarea>
+                    <div ng-messages="userForm.address.$error">
+                      <span class="help-block" ng-show="userForm.address.$touched && userForm.address.$invalid" ng-message="required">Adresse er påkrevd</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : (userForm.postalCode.$touched && userForm.postalCode.$invalid) || editProfile.postalCodeZero || editProfile.landNorway}">
+                  <label class="col-sm-4 control-label" for="postalCode">Postnummer:</label>
+                  <div class="col-sm-8">
+                    <input type="text" maxlength="12" minlength="4" class="form-control" id="postalCode" name="postalCode" ng-model="editProfile.editForm.postalCode" ng-change=" editProfile.postalCodeChanged(editProfile.editForm.postalCode,editProfile.editForm.country)" ng-pattern="/^[0-9]*$/" placeholder="Postnummer" required>
+                    <div ng-messages="userForm.postalCode.$error">
+                      <span class="help-block" ng-show="userForm.postalCode.$touched && userForm.postalCode.$invalid" ng-message="required">Postnummer er påkrevd</span>
+                      <span class="help-block" ng-message="pattern" ng-if="userForm.postalCode.$touched && userForm.postalCode.$invalid">Postnummer er ugyldig</span>
+                      <span class="help-block" ng-message="minlength" ng-if="userForm.postalCode.$touched && userForm.postalCode.$invalid">Postnummer må være 4 siffer</span>
+
+                      <span class="help-block" ng-if="editProfile.postalCodeZero">Postnummer er ugyldig</span>
+
+                      <span class="help-block" ng-if="editProfile.landNorway && !editProfile.postalCodeZero">Norsk postnummer må være 4 siffer</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : userForm.postalPlace.$touched && userForm.postalPlace.$invalid}">
+                  <label class="col-sm-4 control-label" for="postalPlace">Poststed:</label>
+                  <div class="col-sm-8">
+                    <input type="text" maxlength="50" class="form-control" id="postalPlace" name="postalPlace" ng-model="editProfile.editForm.postalLocation" placeholder="Poststed" ng-pattern="/^[A-z\u00C0-\u00ff\s'\.,-\/#!$%\^&\*;:{}=\-_`~()]+$/" required>
+                    <div ng-messages="userForm.postalPlace.$error">
+                      <span class="help-block" ng-show="userForm.postalPlace.$touched && userForm.postalPlace.$invalid" ng-message="required">Poststed er påkrevd</span>
+                      <span class="help-block" ng-message="pattern" ng-if="userForm.postalPlace.$touched && userForm.postalPlace.$invalid">Poststed må bestå av bokstaver</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : (userForm.country.$dirty || userForm.$submitted) && userForm.country.$invalid }">
+                  <label class="col-sm-4 control-label" for="country">Land:</label>
+                  <div class="col-sm-8">
+                    <select class="form-control" id="country" ng-options="country.name as country.name for country in editProfile.allCountries" ng-change=" editProfile.postalCodeChanged(editProfile.editForm.postalCode,editProfile.editForm.country)" ng-model="editProfile.editForm.country" name="country" required>
+                      <option value="">- Land -</option>
+                    </select>
+                    <div ng-messages="userForm.country.$error">
+                      <span class="help-block" ng-show="userForm.country.$touched && userForm.country.$invalid" ng-message="required">Land er påkrevd</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : (userForm.phone.$touched &&  userForm.phone.$invalid) || editProfile.invaidPhoneFormat }">
+                  <label class="col-sm-4 control-label" for="phone">Telefonnummer:</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="phone" name="phone" ng-model="editProfile.editForm.telephone" ng-change="editProfile.isValidPhoneNumber(editProfile.editForm.telephone)" placeholder="Telefonnummer" required>
+                    <div ng-messages="userForm.phone.$error">
+                      <span class="help-block" ng-show="userForm.phone.$touched && userForm.phone.$invalid">Telefonnummer er påkrevd</span>
+                      <span class="help-block" ng-if="editProfile.invaidPhoneFormat && !(userForm.phone.$touched &&  userForm.phone.$invalid)">Telefonnummeret er ugyldig</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : (userForm.personalIdNumber.$touched && userForm.personalIdNumber.$invalid && editProfile.invalidIdFormat) || editProfile.invalidpersonalID || (userForm.personalIdNumber.$touched && userForm.personalIdNumber.$invalid)}">
+                  <label class="col-sm-4 control-label" for="personalIdNumber">
+                    <span data-toggle="tooltip" uib-tooltip="Vi ber om ditt fødsels- og personnummer som en del av vår verifiseringsprosess. Denne informasjonen vil også benyttes når vi gjør innrapportering til Skatteetaten, slik at din inntekt og formue hos FundingPartner automatisk dukker opp i selvangivelsen. Dine personlige opplysninger vil aldri spres til andre og vil bli lagret på en sikker måte.">
+                                        Fødsels- og personnummer:
+                                        <i class="fa fa-question-circle" aria-hidden="true"></i>
+                                        </span>
+                  </label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="personalIdNumber" name="personalIdNumber" ng-blur="editProfile.getValidPersonalIDNumber(editProfile.editForm.personalIDNumber)" ng-model="editProfile.editForm.personalIDNumber" ng-change="editProfile.isValidPersonalId(editProfile.editForm.personalIDNumber)" placeholder="Fødsels- og personnummer" required>
+                    <div ng-messages="userForm.personalIdNumber.$error">
+
+                    <span class="help-block" ng-if="userForm.personalIdNumber.$touched && userForm.personalIdNumber.$invalid" ng-message="required">Fødsels- og personnummer er påkrevd</span>
+
+                      <span class="help-block" ng-if="userForm.personalIdNumber.$touched && userForm.personalIdNumber.$invalid && editProfile.invalidIdFormat">Fødsels- og personnummer må være tall</span>
+                      <span class="help-block" ng-if="(editProfile.invalidpersonalID ) && !(userForm.personalIdNumber.$touched && userForm.personalIdNumber.$invalid && editProfile.invalidIdFormat)">Personnummer er ugyldig</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group" ng-if="typeOfApplicant=='Investor'">
+                  <label class="col-sm-4 control-label">
+                    Kontonummer:
+                  </label>
+                  <div class="col-sm-8">
+                    <p class="form-control-static">
+                      {{editProfile.editForm.bankAccountNumber}}
+                      <a uib-tooltip="Selskapet ditt har flere rettighetshavere eller krever flere personer for å signere. Vennligst send mail til kontakt@fundingpartner, så vil vi registrere selskapet ditt manuelt." href="mailto:kontakt@fundingpartner.no?subject=Bytte%20av%20bankkonto%20for%20uttak"><i class="fa fa-pencil-square-o"></i></a>
+                    </p>
+                  </div>
+                </div>
+                <div class="form-group" ng-show="typeOfApplicant=='Investor'">
+                  <label class="col-sm-4 control-label" for="purposeForInvesting">Formål med investering:</label>
+                  <div class="col-sm-8">
+                    <select name="purposeForInvesting" id="purposeForInvesting" class="form-control" ng-model="editProfile.editForm.purpose">
+                      <option value="">- Formål med investering -</option>
+                      <option value="Return on capital">Avkastning</option>
+                      <option value="Risk diversification">Risikospredning</option>
+                      <option value="Help small businesses">Hjelpe små og mellomstore bedrifter</option>
+                      <option value="Other">Annet</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-xs-6 col-sm-offset-4 col-sm-4">
+                    <a class="btn btn-primary btn-block" ng-click="editProfile.saveChanges()" ng-disabled="editProfile.disableSave()" double-Click timeout="5000">Lagre</a>
+                  </div>
+                  <div class="col-xs-6 col-sm-4">
+                    <button type="button" class="btn btn-default btn-block" ui-sref="myProfile">Avbryt</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

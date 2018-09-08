@@ -1,0 +1,145 @@
+<div class="container-fluid ">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Registrer deg som investor
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <form class="form-horizontal" name="signUpAsAnInvestorPrivateForm" autocomplete="off">
+              <div class="col-md-10 col-lg-8">
+                <div class="form-group" ng-class="{ 'has-error' : signUpAsAnInvestorPrivateForm.country.$touched && signUpAsAnInvestorPrivateForm.country.$invalid}">
+                  <label class="col-sm-5 control-label" for="country">Nasjonalitet:</label>
+                  <div class="col-sm-7">
+                    <select class="form-control" id="country" ng-options="country.name as country.name for country in signUpAsInvestorPrivate3.allCountries" ng-model="signUpAsInvestorPrivate3.form.Nationality" name="country" required>
+                      <option value="">- Land -</option>
+                    </select>
+                    <div ng-messages="signUpAsAnInvestorPrivateForm.country.$error">
+                      <span class="help-block" ng-show="signUpAsAnInvestorPrivateForm.country.$touched && signUpAsAnInvestorPrivateForm.country.$invalid" ng-message="required">Dette feltet er påkrevd</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : signUpAsAnInvestorPrivateForm.occupation.$touched && signUpAsAnInvestorPrivateForm.occupation.$invalid}">
+                  <label class="col-sm-5 control-label" for="occupation">Arbeidssituasjon:</label>
+                  <div class="col-sm-7">
+                    <select class="form-control" id="occupation" name="occupation" ng-model="signUpAsInvestorPrivate3.form.Occupation" required>
+                      <option value="">- Arbeidssituasjon -</option>
+                      <option value="Employed">Ansatt i et selskap</option>
+                      <option value="Self employed">Ansatt i eget selskap</option>
+                      <option value="Student">Student</option>
+                      <option value="Retired">Pensjonist</option>
+                      <option value="Unemployed">Arbeidsledig</option>
+                      <option value="Economically independent">Økonomisk uavhengig</option>
+                    </select>
+                    <div ng-messages="signUpAsAnInvestorPrivateForm.occupation.$error">
+                      <span class="help-block" ng-show="signUpAsAnInvestorPrivateForm.occupation.$touched && signUpAsAnInvestorPrivateForm.occupation.$invalid" ng-message="required">Dette feltet er påkrevd</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : signUpAsAnInvestorPrivateForm.whatIsYourMonthlySalary.$touched && signUpAsAnInvestorPrivateForm.whatIsYourMonthlySalary.$invalid}">
+                  <label class="col-sm-5 control-label" for="whatIsYourMonthlySalary" class="control-label">Hva er din månedslønn?</label>
+                  <div class="col-sm-7">
+                    <select class="form-control" id="whatIsYourMonthlySalary" name="whatIsYourMonthlySalary" ng-model="signUpAsInvestorPrivate3.form.monthlySalaryORRevenue" required>
+                      <option value="">- Trykk for alternativer -</option>
+                      <option value="Less than 20 000">Mindre enn 20 000</option>
+                      <option value="20 000 – 50 000">20 000 – 50 000</option>
+                      <option value="50 000 – 100 000">50 000 – 100 000</option>
+                      <option value="100 000 +">100 000+</option>
+                    </select>
+                    <div ng-messages="signUpAsAnInvestorPrivateForm.whatIsYourMonthlySalary.$error">
+                      <span class="help-block" ng-show="signUpAsAnInvestorPrivateForm.whatIsYourMonthlySalary.$touched && signUpAsAnInvestorPrivateForm.whatIsYourMonthlySalary.$invalid" ng-message="required">Dette feltet er påkrevd</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : signUpAsAnInvestorPrivateForm.howMuchDoYouThinkYouWillTransferToYourAccountOpening.$touched && signUpAsAnInvestorPrivateForm.howMuchDoYouThinkYouWillTransferToYourAccountOpening.$invalid}">
+                  <label class="col-sm-5 control-label" for="howMuchDoYouThinkYouWillTransferToYourAccountOpening" class="control-label">Hvor mye forventer du å overføre ved opprettelse av kontoen?</label>
+                  <div class="col-sm-7">
+                    <select class="form-control" id="" name="howMuchDoYouThinkYouWillTransferToYourAccountOpening" ng-model="signUpAsInvestorPrivate3.form.transferringAmtAtOpening" required>
+                      <option value="">- Trykk for alternativer -</option>
+                      <option value="Less than 10 000">Mindre enn 10 000</option>
+                      <option value="10 000 – 100 000">10 000 – 100 000</option>
+                      <option value="100 000 – 1 000 000">100 000 – 1 000 000</option>
+                      <option value="1 000 000 – 5 000 000">1 000 000 – 5 000 000</option>
+                      <option value="5 000 000 +">5 000 000+</option>
+                    </select>
+                    <div ng-messages="signUpAsAnInvestorPrivateForm.howMuchDoYouThinkYouWillTransferToYourAccountOpening.$error">
+                      <span class="help-block" ng-show="signUpAsAnInvestorPrivateForm.howMuchDoYouThinkYouWillTransferToYourAccountOpening.$touched && signUpAsAnInvestorPrivateForm.howMuchDoYouThinkYouWillTransferToYourAccountOpening.$invalid" ng-message="required">Dette feltet er påkrevd</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : signUpAsAnInvestorPrivateForm.howOftenDoYouThinkYouWillMakeDepositsToYourAccount.$touched && signUpAsAnInvestorPrivateForm.howOftenDoYouThinkYouWillMakeDepositsToYourAccount.$invalid}">
+                  <label class="col-sm-5 control-label" for="howOftenDoYouThinkYouWillMakeDepositsToYourAccount" class="control-label">Hvor mange ganger per år forventer du å gjøre innskudd til kontoen?</label>
+                  <div class="col-sm-7">
+                    <select class="form-control" id="" name="howOftenDoYouThinkYouWillMakeDepositsToYourAccount" ng-model="signUpAsInvestorPrivate3.form.How_often_do_you_want_to_deposit" required>
+                      <option value="">- Trykk for alternativer -</option>
+                      <option value="Less than 10 times">Mindre enn 10 ganger</option>
+                      <option value="10 – 50 times">10 – 50 ganger</option>
+                      <option value="50 – 100 times">50 – 100 ganger</option>
+                      <option value="100 + times">100+ ganger</option>
+                    </select>
+                    <div ng-messages="signUpAsAnInvestorPrivateForm.howOftenDoYouThinkYouWillMakeDepositsToYourAccount.$error">
+                      <span class="help-block" ng-show="signUpAsAnInvestorPrivateForm.howOftenDoYouThinkYouWillMakeDepositsToYourAccount.$touched && signUpAsAnInvestorPrivateForm.howOftenDoYouThinkYouWillMakeDepositsToYourAccount.$invalid" ng-message="required">Dette feltet er påkrevd</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : signUpAsAnInvestorPrivateForm.howMuchDoYouThinkYouWillDepositPerYear.$touched && signUpAsAnInvestorPrivateForm.howMuchDoYouThinkYouWillDepositPerYear.$invalid}">
+                  <label class="col-sm-5 control-label" for="howMuchDoYouThinkYouWillDepositPerYear" class="control-label">Hvor mye forventer du å sette inn på kontoen hvert år?</label>
+                  <div class="col-sm-7">
+                    <select class="form-control" id="" name="howMuchDoYouThinkYouWillDepositPerYear" ng-model="signUpAsInvestorPrivate3.form.deposit_per_year" required>
+                      <option value="">- Trykk for alternativer -</option>
+                      <option value="Less than 50 000">Mindre enn 50 000</option>
+                      <option value="50 000 – 100 000">50 000 – 100 000</option>
+                      <option value="100 000 – 1 000 000">100 000 – 1 000 000</option>
+                      <option value="1 000 000 – 5 000 000">1 000 000 – 5 000 000</option>
+                      <option value="5 000 000 +">5 000 000+</option>
+                    </select>
+                    <div ng-messages="signUpAsAnInvestorPrivateForm.howMuchDoYouThinkYouWillDepositPerYear.$error">
+                      <span class="help-block" ng-show="signUpAsAnInvestorPrivateForm.howMuchDoYouThinkYouWillDepositPerYear.$touched && signUpAsAnInvestorPrivateForm.howMuchDoYouThinkYouWillDepositPerYear.$invalid" ng-message="required">Dette feltet er påkrevd</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : signUpAsAnInvestorPrivateForm.howOftenDoYouPlanToWithdrawMoneyFromYourAccount.$touched && signUpAsAnInvestorPrivateForm.howOftenDoYouPlanToWithdrawMoneyFromYourAccount.$invalid}">
+                  <label class="col-sm-5 control-label" for="howOftenDoYouPlanToWithdrawMoneyFromYourAccount" class="control-label">Hvor mange ganger per år forventer du å gjøre uttak fra kontoen?</label>
+                  <div class="col-sm-7">
+                    <select class="form-control" id="" name="howOftenDoYouPlanToWithdrawMoneyFromYourAccount" ng-model="signUpAsInvestorPrivate3.form.withdrawal_frequency" required>
+                      <option value="">- Trykk for alternativer -</option>
+                      <option value="Less than 10 times">Mindre enn 10 ganger</option>
+                      <option value="10 – 50 times">10 – 50 ganger</option>
+                      <option value="50 – 100 times">50 – 100 ganger</option>
+                      <option value="100 + times">100+ ganger</option>
+                    </select>
+                    <div ng-messages="signUpAsAnInvestorPrivateForm.howOftenDoYouPlanToWithdrawMoneyFromYourAccount.$error">
+                      <span class="help-block" ng-show="signUpAsAnInvestorPrivateForm.howOftenDoYouPlanToWithdrawMoneyFromYourAccount.$touched && signUpAsAnInvestorPrivateForm.howOftenDoYouPlanToWithdrawMoneyFromYourAccount.$invalid" ng-message="required">Dette feltet er påkrevd</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-5 control-label" for="AreYouAUSCitizenOrTaxableToTheUnitedStates">Hvis du ikke eier pengene du planlegger å sette inn på kontoen, vennligst huk av boksen under. </label>
+                  <div class="col-sm-7">
+                    <div class="checkbox">
+                      <label>
+                        <input type="checkbox" id="postalPlace" ng-model="signUpAsInvestorPrivate3.form.doNotOwnTheMoney" >Trykk hvis ja</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12 col-lg-12">
+                <div class="col-sm-12 b-c-g c-w">
+                  FundingPartner AS har iht lov om tiltak mot hvitvasking, terrorfinansiering mv. samt andre lover og forskrifter, behov for å hente inn en del personopplysninger om personer som investerer eller står bak juridiske selskaper som investerer. Disse personopplysningene vil ikke bli utlevert til andre virksomheter. Brukeren kan selv oppdatere disse senere gjennom brukerprofilen hos FundingPartner.
+                </div>
+              </div>
+              <div class="col-md-10 col-lg-8">
+                <div class="form-group">
+                  <div class="col-xs-12 col-sm-offset-4 col-sm-8 p-t-15">
+                    <button type="submit" class="btn btn-primary btn-block" ng-click="signUpAsInvestorPrivate3.continue()" ng-disabled="signUpAsInvestorPrivate3.disableContinue()" double-Click timeout="10000">Fortsett</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

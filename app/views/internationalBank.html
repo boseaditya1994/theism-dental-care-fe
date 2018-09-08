@@ -1,0 +1,59 @@
+﻿
+<div class="row customTabs">
+  <div class="col-sm-12 col-md-8 col-lg-6">
+    <div class="panel panel-default">
+    
+      <div class="panel-body">
+       
+         <label class="f-24">Internasjonal bankoverføring</label>
+        <p>Du setter inn penger som en vanlig overføring i nettbanken. Husk å bruke riktig kontonummer og det personlige KID-nummeret som du ser under. BIC og IBAN-nummeret står også under.</p>
+       
+        <form class="form-horizontal">
+          <div class="form-group">
+            <label class="col-sm-6 control-label">
+              Bankkontonummer
+            </label>
+            <div class="col-sm-6">
+              <p class="form-control-static">{{international.companyDetails.Account_Number__c}}</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-6 control-label">
+              KID nummer
+            </label>
+            <div class="col-sm-6">
+              <p class="form-control-static">{{international.companyDetails.KID__c}}</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-6 control-label">
+              BIC (SWIFT)
+            </label>
+            <div class="col-sm-6">
+              <p class="form-control-static">{{international.companyDetails.BIC_SWIFT__c}}</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-6 control-label">
+              IBAN number (elektronisk)
+            </label>
+            <div class="col-sm-6">
+              <p class="form-control-static">{{international.companyDetails.IBAN_number_elektronisk__c}}</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-6 control-label">
+              FundingPartners adresse
+            </label>
+            <div class="col-sm-6">
+              <p class="form-control-static">
+                {{international.companyDetails.FundingPartners_addresse__c}}
+              </p>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+

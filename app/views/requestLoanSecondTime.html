@@ -1,0 +1,117 @@
+<div class="container-fluid ">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Søk om lån
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-10 col-lg-8">
+              <form class="form-horizontal" name="requestLoanForm" >
+                <div class="form-group" ng-class="{ 'has-error' :  (requestLoanForm.loanSize.$touched && requestLoanForm.loanSize.$invalid) }">
+                  <label for="loanSize" class="col-sm-4 control-label">Hvor stort lån trenger du?</label>
+                  <div class="col-sm-4 m-t-10" ng-class="{ 'has-error' :  (requestLoanForm.loanSize.$touched && requestLoanForm.loanSize.$invalid)}">
+                    <!-- <input type="number" minlength="6" class="form-control" id="loanSize" name="loanSize" ng-model="requestLoanSecondTime.loanDetails.loanAmount" ng-change="requestLoanSecondTime.inputAmount()" placeholder="NOK 0" required> -->
+
+                    <ui-select class="custom-control" ng-model="requestLoanSecondTime.loanDetails.loanAmount" name="loanSize" id="loanSize" ng-change="requestLoanSecondTime.loanDetails.loanAmount=$select.selected.Amt__c" theme="selectize" required> 
+                      <ui-select-match placeholder="NOK 0">
+                        {{requestLoanSecondTime.loanDetails.loanAmount}}
+                      </ui-select-match>
+                      <ui-select-choices repeat="amtVal in amount | filter: $select.search" value="{{$select.selected.Amt__c}}">
+                        
+                        <span ng-bind-html="amtVal.Amt__c"></span>
+                      </ui-select-choices>
+                    </ui-select>
+
+                    <div ng-messages="requestLoanForm.loanSize.$error">
+                      <span class="help-block m-t-0" ng-show="requestLoanForm.loanSize.$touched && requestLoanForm.loanSize.$invalid" ng-message="required">Lånesum må fylles inn</span>
+                      <!-- <span class="help-block" ng-message="minlength" ng-show="requestLoanForm.loanSize.$touched  && !requestLoanSecondTime.isAmountZero">  Lånebeløp må være større enn 100 000 kr</span> -->
+                    </div>
+                    <!-- <span class="help-block" ng-show=" requestLoanSecondTime.isAmountGreater">Lånebeløp kan ikke overskride 10 000 000 kr</span>
+                    <span class="help-block" ng-show="!requestLoanSecondTime.isAmountZero && requestLoanSecondTime.invalidAmount">Lånesum er ugyldig</span>
+                    <span class="help-block" ng-show="requestLoanSecondTime.isAmountZero">Lånesum kan ikke være null</span> -->
+                  </div>
+               <!--    <div class="col-sm-4 m-t-10" ng-class="{ 'has-error' : (requestLoanForm.loanTerm.$touched && requestLoanForm.loanTerm.$invalid)}">
+                    <select class="form-control" id="loanTerm" name="loanTerm" ng-model="requestLoanSecondTime.loanDetails.term" required>
+                      <option value="">- Velg -</option>
+                      <option value="6">6 mnd</option>
+                      <option value="12">1 år (12 mnd)</option>
+                      <option value="24">2 år (24 mnd)</option>
+                      <option value="36">3 år (36 mnd)</option>
+                      <option value="48">4 år (48 mnd)</option>
+                      <option value="60">5 år (60 mnd)</option>
+                    </select>
+                    <div ng-messages="requestLoanForm.loanTerm.$error">
+                      <span class="help-block" ng-show="requestLoanForm.loanTerm.$touched && requestLoanForm.loanTerm.$invalid" ng-message="required">Løpetid er påkrevd</span>
+                    </div>
+                  </div> -->
+                </div>
+
+
+                <div class="form-group" ng-class="{ 'has-error' :(requestLoanForm.loanTerm.$touched && requestLoanForm.loanTerm.$invalid)}">
+                  <label for="loanTerm" class="col-sm-4 control-label">Ønsket løpetid:</label>
+                  <div class="col-sm-8">
+                    <select class="form-control" id="loanTerm" name="loanTerm" ng-model="requestLoanSecondTime.loanDetails.term" required>
+                      <option value="">- Velg -</option>
+                      <option value="6">6 mnd</option>
+                      <option value="12">1 år (12 mnd)</option>
+                      <option value="24">2 år (24 mnd)</option>
+                      <option value="36">3 år (36 mnd)</option>
+                      <option value="48">4 år (48 mnd)</option>
+                      <option value="60">5 år (60 mnd)</option>
+                    </select>
+                    <div ng-messages="requestLoanForm.loanTerm.$error">
+                      <span class="help-block" ng-show="requestLoanForm.loanTerm.$touched && requestLoanForm.loanTerm.$invalid" ng-message="required">Løpetid er påkrevd</span>
+                    </div>
+                  </div>
+                </div>
+
+
+
+
+                <div class="form-group" ng-class="{ 'has-error' : requestLoanForm.loanType.$touched && requestLoanForm.loanType.$invalid}">
+                  <label class="col-sm-4 control-label" for="loanType">Formål med lånet:</label>
+                  <div class="col-sm-8">
+                    <select class="form-control" id="loanType" ng-model="requestLoanSecondTime.loanDetails.loanType" name="loanType" required>
+                      <option value="">- Trykk for alternativer -</option>
+                      <option value="Vekstkapital/Ekspansjonskapital">Vekstkapital/Ekspansjonskapital</option>
+                      <option value="Arbeidskapital">Arbeidskapital</option>
+                      <option value="Produksjonsutstyr">Produksjonsutstyr</option>
+                      <option value="Brolån">Brolån</option>
+                      <option value="Annet">Annet</option>
+                    </select>
+                    <div ng-messages="requestLoanForm.loanType.$error">
+                      <span class="help-block" ng-show="requestLoanForm.loanType.$touched " ng-message="required">Formål med lånet er påkrevd</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : requestLoanForm.loanReason.$touched && requestLoanForm.loanReason.$invalid}">
+                  <label class="col-sm-4 control-label" for="phone">Hva skal lånet brukes til?</label>
+                  <div class="col-sm-8">
+                    <textarea type="text" class="form-control" id="loanReason" name="loanReason" rows="3" ng-model="requestLoanSecondTime.loanDetails.whatIsTheLoanFor" maxlength="10000" placeholder="Skriv her" required></textarea>
+                    <div ng-messages="requestLoanForm.loanReason.$error">
+                      <span class="help-block" ng-show="requestLoanForm.loanReason.$touched && requestLoanForm.loanReason.$invalid" ng-message="required">Bakgrunn for lånebehov</span>
+                      <span class="help-block" ng-show="requestLoanForm.loanReason.$touched && requestLoanForm.loanReason.$invalid" ng-message="maxlength">Formål kan være maks 10000 tegn</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-4 control-label" for="discountCode">Rabattkode:</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="discountCode" name="discountCode" ng-model="requestLoanSecondTime.loanDetails.discountCode" placeholder="Valgfritt">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-xs-12 col-sm-offset-4 col-sm-8">
+                    <button type="submit" class="btn btn-primary btn-block" ng-click="requestLoanSecondTime.requestLoan()" ng-disabled="requestLoanSecondTime.disableSubmit()" double-Click timeout="5000">Send forespørsel</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

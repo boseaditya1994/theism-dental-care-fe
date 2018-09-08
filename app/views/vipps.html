@@ -1,0 +1,53 @@
+﻿
+<div class="row customTabs">
+  <div class="col-sm-12 col-md-8 col-lg-6">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <img src="images/vipps.png" class="img-responsive" />
+        <p>For å overføre via VIPPS, trenger du kun å skrive inn beløp og forsikre deg om at telefonnummeret du har oppgitt i din profil er det samme som du har knyttet til VIPPS. Deretter vil det i løpet av en arbeidsdag sendes en betalingsforespørsel til VIPPS-appen på din mobil som du må godkjenne. Du kan overføre inntil kr 20 000 kostnadsfritt.</p>
+        
+        <form class="form-horizontal" name="vippsForm" autocomplete="off">
+          <div class="form-group">
+            <label class="col-sm-6 control-label">
+              Telefonnummer
+            </label>
+            <div class="col-sm-6">
+              <p class="form-control-static">{{vippsCtrl.vippsPhone}}</p>
+              <!-- Get phone number from the user account -->
+            </div>
+          </div>
+          <!-- <div class="form-group">
+            <label class="col-sm-6 control-label" for="amountToDeposit">
+              Beløp som skal settes inn
+            </label>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" id="amountToDeposit" ng-model="vippsCtrl.formVipps.Amount" placeholder="Beløp i NOK" required>
+            </div> -->
+
+             <div class="form-group" ng-class="{'has-error':(vippsForm.amountToDeposit.$touched && vippsForm.amountToDeposit.$invalid) || (vippsCtrl.vaildAmount.isAmountLess) ||  (vippsCtrl.vaildAmount.isAmountGreater) || (vippsCtrl.vaildAmount.invalidAmount)}">
+              <label class="col-sm-6 control-label" for="amountToDeposit">
+                Beløp som skal settes inn
+              </label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="amountToDeposit" name="amountToDeposit" placeholder="Beløp i NOK" ng-model="vippsCtrl.formVipps.Amount" ng-change="vippsCtrl.inputAmount()" required>
+                <div ng-messages="vippsForm.amountToDeposit.$error">
+                  <span class="help-block" ng-show="(vippsForm.amountToDeposit.$touched && vippsForm.amountToDeposit.$invalid)" ng-message="required">Beløp må fylles inn</span>
+                </div>
+                <span class="help-block" ng-show=" vippsCtrl.vaildAmount.invalidAmount && !(vippsForm.amountToDeposit.$touched && vippsForm.amountToDeposit.$invalid )">Beløp er ugyldig</span>
+                <span class="help-block" ng-show="vippsCtrl.vaildAmount.isAmountLess && !(vippsForm.amountToDeposit.$touched && vippsForm.amountToDeposit.$invalid )">Minimumsbeløp må være 100</span>
+                <span class="help-block" ng-show="vippsCtrl.vaildAmount.isAmountGreater && !(vippsForm.amountToDeposit.$touched && vippsForm.amountToDeposit.$invalid )">Beløp kan ikke være større enn 20 000</span>
+              </div>
+            </div>
+
+
+       
+          <div class="row">
+            <div class="col-sm-12">
+              <button class="btn btn-block btn-success" ng-click="vippsCtrl.confirm()" ng-disabled="vippsCtrl.buttonDisable()" double-Click timeout="5000">Overfør med VIPPS</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

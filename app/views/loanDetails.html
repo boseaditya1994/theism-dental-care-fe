@@ -1,0 +1,68 @@
+<div class="container-fluid">
+  <h3 class="page-title"><span ng-bind="loanDetails.name"></span></h3>
+  <uib-tabset active="loanDetails.active" vertical="{{util.detectmob()}}">
+    <uib-tab ng-repeat="tab in loanDetails.tabs" heading="{{tab.title}}" index="tab.route" select="loanDetails.tabSelected(tab.route)">
+    </uib-tab>
+  </uib-tabset>
+  <div ui-view class="tab-container"></div>
+  <hr />
+  <div class="panel panel-default" ng-show="loanDetails.isPercentFundedVisible">
+    <div class="panel-heading">Invester nå</div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-xs-11 col-sm-5">
+          <dl class="dl-horizontal dl-size-md">
+            <dt class="dt_width">Kredittklasse</dt>
+            <dd class="dd_width"><span ng-bind="loanDetails.rating"></span></dd>
+            <dt class="dt_width">Løpetid</dt>
+            <dd class="dd_width"><span ng-bind="util.getTerm(loanDetails.duration)"></span></dd>
+            <dt class="dt_width">Rente</dt>
+            <dd class="dd_width"><span ng-bind="loanDetails.interestRate | fpPercentage:1"></span></dd>
+            <dt class="dt_width">Foreløpig antall budgivere</dt>
+            <dd class="dd_width"><span ng-bind="loanDetails.biddersAlready"></span></dd>
+          </dl>
+        </div>
+        <div class="col-xs-12 col-sm-7 col-md-6">
+          <form class="form-horizontal" name="bidToInvest" autocomplete="off">
+            <div class="form-group">
+              <label class="col-sm-8 control-label">Allerede tegnet beløp</label>
+              <div class="col-sm-4">
+                <p class="form-control-static">{{loanDetails.amountAlreadyInvestedInLoan | fpCurrency }}</p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-8 control-label">Beløp tilgjengelig for tegning</label>
+              <div class="col-sm-4">
+                <p class="form-control-static">{{loanDetails.amountAvailableForFurtherInvestment | fpCurrency }}</p>
+              </div>
+            </div>
+     
+     
+            <div class="form-group" ng-class="{'has-error':(bidToInvest.amountToInvest.$touched && bidToInvest.amountToInvest.$invalid) || (loanDetails.bidToInvestForm.isAmountZero) ||  (loanDetails.bidToInvestForm.isAmountGreater) || (loanDetails.bidToInvestForm.isAmountGreaterThanInvestment) || (loanDetails.bidToInvestForm.invalidAmount) || (loanDetails.bidToInvestForm.amount==0 && bidToInvest.amountToInvest.$touched)}">
+              <label for="amountToInvest" class="col-sm-8 control-label">Investeringsbeløp</label>
+              <div class="col-sm-4">
+                <input type="number" step="1000" min="1000" minlength="4" class="form-control" id="amount" name="amountToInvest" placeholder="Beløp" ng-model="loanDetails.bidToInvestForm.amount" ng-change="loanDetails.inputAmount()" required>
+                <div ng-messages="bidToInvest.amountToInvest.$error">
+                  <span class="help-block" ng-show="(bidToInvest.amountToInvest.$touched && bidToInvest.amountToInvest.$invalid)" ng-message="required">Beløp må fylles inn</span>
+                  <span class="help-block" ng-show="(bidToInvest.amountToInvest.$touched && bidToInvest.amountToInvest.$invalid)" ng-message="minlength">Minimumsbeløp må være 1000</span>
+                  <span class="help-block" ng-messages="customError" ng-show="bidToInvest.amountToInvest.$touched && !bidToInvest.amountToInvest.$error.minlength && !bidToInvest.amountToInvest.$error.required && !(loanDetails.bidToInvestForm.amount%1000==0)">Beløpet må rundes av til nærmeste tusen</span>
+                </div>
+                <span class="help-block" ng-show="loanDetails.bidToInvestForm.invalidAmount">Beløp er ugyldig</span>
+                <span class="help-block" ng-show="loanDetails.bidToInvestForm.amount==0 && bidToInvest.amountToInvest.$touched && !bidToInvest.amountToInvest.$invalid">Beløp kan ikke være null</span>
+                <span class="help-block" ng-show="loanDetails.bidToInvestForm.isAmountGreater">Beløp kan ikke være større enn tilgjengelige midler</span>
+
+                <span class="help-block" ng-show="loanDetails.bidToInvestForm.isAmountGreaterThanInvestment">Beløpet kan ikke være større enn resterende behov for lån</span>
+              </div>
+            </div>
+            <!-- ng-disabled="loanDetails.disable()" -->
+            <div class="form-group">
+              <div class="col-sm-offset-6 col-sm-5 col-md-offset-8 col-md-4 ">
+                <button class="btn btn-success" ng-click="loanDetails.bidToInvest()" ng-disabled="loanDetails.disable()" double-Click timeout="5000">Klikk her for å investere</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

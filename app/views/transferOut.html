@@ -1,0 +1,63 @@
+﻿<div class="container-fluid">
+  <h3 class="m-b-lg">Uttak fra din FundingPartner-konto</h3>
+  <div class="row">
+    <div class="col-sm-8">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <form class="form-horizontal" name="transferOutForm" autocomplete="off">
+            <div class="form-group">
+              <label class="col-sm-6 control-label">
+                <span data-toggle="tooltip" tooltip-placement="auto bottom" uib-tooltip="Dette kontonummeret samsvarer med kontonummeret du oppga ved registrering, og kan av sikkerhetsmessige årsaker ikke endres direkte gjennom din profil. For å endre kontonummer, ta kontakt med FundingPartner via e-post.">
+                                    Kontonummer
+                                    <i class="fa fa-question-circle" aria-hidden="true"></i>
+                                </span>
+              </label>
+              <div class="col-sm-6">
+                <p class="form-control-static">{{transactionOut.accountNumber}}</p>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-sm-6 control-label">
+                
+                                    Beløp tilgjengelig for tegning
+                                    
+              </label>
+              <div class="col-sm-6">
+                <p class="form-control-static">{{availableFunds | fpTransferOutCurrency}}</p>
+              </div>
+            </div>
+
+            <div class="form-group" ng-class="{'has-error':(transferOutForm.amountToWithdraw.$touched && transferOutForm.amountToWithdraw.$invalid) || (transactionOut.vaildAmount.isAmountZero) ||  (transactionOut.vaildAmount.isAmountGreater) || (transactionOut.vaildAmount.invalidAmount)}">
+              <label class="col-sm-6 control-label" for="amountToWithdraw">
+                Beløp
+              </label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="amountToWithdraw" name="amountToWithdraw" placeholder="Beløp i kroner" ng-model="transactionOut.transactionOutForm.amount" ng-change="transactionOut.inputAmount()" required>
+                <div ng-messages="transferOutForm.amountToWithdraw.$error">
+                  <span class="help-block" ng-show="(transferOutForm.amountToWithdraw.$touched && transferOutForm.amountToWithdraw.$invalid)" ng-message="required">Beløp må fylles inn</span>
+                </div>
+                <span class="help-block" ng-show=" transactionOut.vaildAmount.invalidAmount && !(transferOutForm.amountToWithdraw.$touched && transferOutForm.amountToWithdraw.$invalid )">Beløp er ugyldig</span>
+                <span class="help-block" ng-show="transactionOut.vaildAmount.isAmountZero && !(transferOutForm.amountToWithdraw.$touched && transferOutForm.amountToWithdraw.$invalid )">Beløp kan ikke være null</span>
+                <span class="help-block" ng-show="transactionOut.vaildAmount.isAmountGreater && !(transferOutForm.amountToWithdraw.$touched && transferOutForm.amountToWithdraw.$invalid )">Beløp kan ikke være større enn tilgjengelige midler</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <button class="btn btn-block btn-danger" ng-click="transactionOut.transaction()" ng-disabled="transactionOut.buttonDisable()" double-Click timeout="5000">Overfør til bankkonto</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">Overfør penger til nettbanken din</div>
+        <div class="panel-body">
+          På denne siden kan du enkelt ta ut penger fra din FundingPartner-konto. Pengene vil overføres til kontoen du har registrert i din profil.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

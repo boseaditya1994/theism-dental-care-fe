@@ -1,0 +1,39 @@
+﻿<div class="container-fluid">
+
+  <div ui-view>
+    <h3 class="m-b-md">Sett inn penger</h3>
+    <div class="row m-b-md">
+      <div class="col-xs-12">
+        <p>For å sette inn penger på din FundingPartner-konto kan du velge mellom å bruke normal bankoverføring, eller overføring via VIPPS.</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="panel panel-primary panel-hover clickable" ui-sref="transfer.in.details.norwegianBank">
+          <div class="panel-heading">
+            <h4>Vanlig bankoverføring fra din bank</h4>
+          </div>
+          <div class="panel-body text-center">
+            <img src="images/Photo for banktransfers wider.jpg" class="h-115 w_100" alt="Vanlig bankoverføring (Nettgiro)" />
+          </div>
+          <div class="panel-footer">
+            <div>Kan brukes av privatpersoner eller selskaper</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="panel panel-primary panel-hover clickable" ui-sref="transfer.in.details.vipps">
+          <div class="panel-heading">
+            <h4>Overføring med VIPPS</h4>
+          </div>
+          <div class="panel-body text-center">
+            <img src="images/vipps_logo.png" class="h-115 w_100-max_w_327" alt="VIPPS" />
+          </div>
+          <div class="panel-footer">
+            <div>Kan kun brukes av privatpersoner</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

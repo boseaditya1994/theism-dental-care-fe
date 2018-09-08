@@ -1,0 +1,34 @@
+<div class="container-fluid">
+  <div class="table-responsive fp-table-container m-t">
+    <table class="table" st-table="closedLoans.closedLoans" st-safe-src="closedLoans.closedLoansCopy">
+      <thead class="sortable-table-headings">
+        <tr>
+          <th st-sort="Name">Lånets ID</th>
+          <th st-sort="loan__Loan_Purpose__r.Name">Formål</th>
+          <th st-sort="loan__Loan_Amount__c">Beløp</th>
+          <th st-sort="Application__r.Submission_Date__c">Dato</th>
+          <th st-sort="loan__Loan_Status__c">Status</th>
+          <th st-sort="">Se detaljer</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="x in closedLoans.closedLoans">
+          <td>{{x.Name}}</td>
+          <td>{{x.loan__Loan_Purpose__r.Name}}</td>
+          <td>{{x.loan__Loan_Amount__c | fpCurrency}}</td>
+          <td>{{util.dateFormat(x.Application__r.Submission_Date__c)}}</td>
+          <td>{{util.statusTranslation(x.loan__Loan_Status__c)}}</td>
+          <td><a href="" ui-sref="viewLoanDetails({loanId: x.Id})"">Se detaljer</a></td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="8" class="text-center">
+            <div st-pagination="" st-items-by-page="10"></div>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>

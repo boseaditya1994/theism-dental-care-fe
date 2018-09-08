@@ -1,0 +1,89 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Aktuelle lån
+        </div>
+        <div class="table-responsive fp-table-container m-t ">
+          <table class="table w_1109" st-table="invest.loanDetails" st-safe-src="invest.loanDetailsCopy">
+            <thead class="sortable-table-headings">
+              <tr>
+                <th></th>
+                <th class="t-a-l" st-sort="Loan_Title__c">Formål</th>
+                <th st-sort="peer__Credit_Band_Type__c">
+                  <span uib-tooltip="Alle lån deles inn i kredittklasser fra A-D, hvor A indikerer lavest risiko." tooltip-placement="auto right">Kredittklasse
+                                        <i class="fa fa-question-circle" aria-hidden="true"></i>
+                                    </span>
+                </th>
+                <th st-sort="peer__Requested_Loan_Amount__c">
+                  <span data-toggle="tooltip" uib-tooltip="Lånebeløp som ønskes." tooltip-placement="auto right">
+                                        Beløp
+                                        <i class="fa fa-question-circle" aria-hidden="true"></i>
+                                    </span>
+                </th>
+                <th st-sort="peer__Term__c">
+                  <span data-toggle="tooltip" uib-tooltip="Lengde på lånets løpetid. Avbetaling skjer gradvis, og ved løpetidens slutt vil du ha mottatt hele beløpet du har lånt ut samt renter." tooltip-placement="auto right">
+
+                                        Løpetid
+                                        <i class="fa fa-question-circle" aria-hidden="true"></i>
+                                    </span>
+                </th>
+                <th st-sort="peer__Interest_Rate__c">
+                  <span data-toggle="tooltip" uib-tooltip="Årlig rente på lånet. Dette er fortjenesten du vil motta for å låne penger til selskapet." tooltip-placement="auto right">
+
+                                        Rente
+                                        <i class="fa fa-question-circle" aria-hidden="true"></i>
+                                    </span>
+                </th>
+                <th st-sort="peer__Percent_Funded__c">
+                  <span data-toggle="tooltip" uib-tooltip="Prosentvis andel av låneforespørselen som er tegnet." tooltip-placement="auto left">
+
+                                        %&nbsp;tegnet
+                                        <i class="fa fa-question-circle" aria-hidden="true"></i>
+                                    </span>
+                </th>
+                <th st-sort="timeLeftInMinutes" st-sort-default="true">Tid igjen</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="x in invest.loanDetails">
+                <td class="table-image">
+                  <img ng-show="x.pic" data-ng-src="data:image/jpeg;base64,{{x.pic}}" class="img-responsive">
+                  <img ng-show="!x.pic" data-ng-src="data:image/png;base64,{{invest.placeholder}}" class="img-responsive" />
+                </td>
+                <td class="t-a-l">
+                  <span class="table-cell-multline">
+                                        <a ng-show="x.Loan_Title__c" href="" ui-sref="loan({loanId: x.Id})">{{x.Loan_Title__c}}</a>
+                                        <a ng-show="!x.Loan_Title__c" href="" ui-sref="loan({loanId: x.Id})">Uten navn</a>
+                                    </span>
+                  <span ng-show="x.peer__Borrower__r.BillingStreet && x.peer__Borrower__r.BillingCity && x.peer__Borrower__r.BillingState && x.peer__Borrower__r.BillingState && x.peer__Borrower__r.BillingPostalCode && x.peer__Borrower__r.BillingCountry">{{x.peer__Borrower__r.BillingStreet}} , {{x.peer__Borrower__r.BillingCity}} ,
+                                    {{x.peer__Borrower__r.BillingState}}
+                                    {{x.peer__Borrower__r.BillingPostalCode}} ,
+                                    {{x.peer__Borrower__r.BillingCountry}}
+                                    </span>
+                </td>
+                <td class="t-a-c">{{x.peer__Credit_Band_Type__c}}</td>
+                <td>{{x.peer__Requested_Loan_Amount__c | fpMyBidPartsCurrency}}</td>
+                <td>{{util.getTerm(x.peer__Term__c)}}</td>
+                <td>{{x.peer__Interest_Rate__c | fpPercentage:1}}</td>
+                <td class="t-a-l">
+                  <uib-progressbar animate="false" value="x.peer__Percent_Funded__c" type="success" class="table-cell-multline"></uib-progressbar>
+                  {{x.peer__Percent_Funded__c | fpPercentage:1}}
+                </td>
+                <td>{{util.timeLeft(x.timeLeft)}}</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="8" class="text-center">
+                  <div st-pagination="" st-items-by-page="10"></div>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

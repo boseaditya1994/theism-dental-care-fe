@@ -1,0 +1,63 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" ng-init="isCollapsed = true" ng-click="isCollapsed = !isCollapsed">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" ng-click="ctrl.logoClick()" href="#">
+                    <img src="images/fundingpartner_logo_blue.svg" alt="FP"/>
+                    FundingPartner
+                </a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse" ng-class="{collapse: isCollapsed}">
+      <ul class="nav navbar-nav navbar-right">
+        <li ng-show="ctrl.topMenuShow()" ng-click="isCollapsed = !isCollapsed"><a ui-sref-active="active" ui-sref="investorSummary">Sammendrag</a></li>
+        <li ng-show="ctrl.topMenuShow()" ng-click="isCollapsed = !isCollapsed"><a ui-sref-active="active" ui-sref="invest">Invester</a></li>
+        <li ng-show="ctrl.topMenuShow()" class="dropdown">
+          <a class="dropdown-toggle w-100" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" ng-class="{active: userCtrl.$state.includes('transfer')}">
+                         Overfør penger
+
+                        <span class="caret"></span>
+                    </a>
+          <ul class="dropdown-menu">
+            <li><a ui-sref="transfer.in" ui-sref-opts="{reload: true}" ng-click="isCollapsed=!isCollapsed">Innskudd</a></li>
+            <li><a ui-sref="transfer.out" ng-click="isCollapsed=!isCollapsed">Uttak</a></li>
+          </ul>
+        </li>
+        <li ng-show="!accessToken" ng-click="isCollapsed = !isCollapsed"><a ui-sref="signUp"><span class="glyphicon glyphicon-user"></span> Registrer deg</a></li>
+        <li ng-show="!accessToken" ng-click="isCollapsed = !isCollapsed"><a ui-sref="login"><span class="glyphicon glyphicon-log-in"></span> Logg inn</a></li>
+        <li ng-click="isCollapsed = !isCollapsed">
+          <a class=" m-t-7" href="#" ng-show="typeOfApplicant=='Borrower' && accessToken && hideDashboardButtonFlag" ng-click="ctrl.goToBorrowerDashboard()">Sammendrag</a>
+        </li>
+        <li ng-click="isCollapsed = !isCollapsed">
+          <a class=" m-t-7" href="#" ng-show="typeOfApplicant=='Borrower' && accessToken " ng-click="ctrl.applyLoan()">Søk om nytt lån</a>
+        </li>
+        <li class="dropdown topmenu-user" ng-show="accessToken">
+          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <span class="block word_wrap">
+                            <span class="block w-200">
+                                <span class="glyphicon glyphicon-user icon-margin-right"></span>
+                                {{headerName}}
+                                <span class="caret"></span>
+                            </span>
+                            <span class="block text-sm" ng-show="ctrl.topMenuShow()">
+                                Tilgjengelige midler: {{availableFunds | fpCurrency}}
+                            </span>
+                            <span class="block text-sm" ng-show="typeOfApplicant=='Borrower' && userDetailsPopulated ">
+                                Antall lån: {{noOfLoan}}
+                            </span>
+                        </span>
+                    </a>
+          <ul class="dropdown-menu sortable ">
+            <li ng-show="(ctrl.topMenuShow()) || (typeOfApplicant=='Borrower' && userDetailsPopulated )" ng-click="isCollapsed=!isCollapsed"><a ng-click="ctrl.myProfile()">Min profil</a></li>
+            <li ng-show="(ctrl.topMenuShow()) || (typeOfApplicant=='Borrower' && userDetailsPopulated )" role="separator" class="divider"></li>
+            <li ng-click="isCollapsed=!isCollapsed"><a ng-click="ctrl.logout()">Logg ut</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

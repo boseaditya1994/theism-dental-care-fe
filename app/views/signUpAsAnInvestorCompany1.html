@@ -1,0 +1,213 @@
+<div class="container-fluid ">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Registrer deg som investor
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-10 col-lg-8">
+              <form class="form-horizontal" name="signUpAsAnInvestorCompanyForm" autocomplete="off">
+                <div class="form-group" ng-class="{ 'has-error' : signUpAsAnInvestorCompanyForm.companyName.$touched && signUpAsAnInvestorCompanyForm.companyName.$invalid}">
+                  <label for="companyName" class="col-sm-4 control-label">Firmanavn:</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="companyName" name="companyName" placeholder="Firmanavn" ng-model="signUpAsInvestorCompany1.form.companyName" placeholder="Firmanavn" required>
+                    <div ng-messages="signUpAsAnInvestorCompanyForm.companyName.$error">
+                      <span class="help-block" ng-show="signUpAsAnInvestorCompanyForm.companyName.$touched && signUpAsAnInvestorCompanyForm.companyName.$invalid" ng-message="required">Firmanavn er påkrevd</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : signUpAsAnInvestorCompanyForm.companyOrgNumber.$touched && signUpAsInvestorCompany1.invalidOrg || signUpAsAnInvestorCompanyForm.companyOrgNumber.$touched && signUpAsAnInvestorCompanyForm.companyOrgNumber.$invalid || (signUpAsInvestorCompany1.form.companyOrgNumber.length<9 && signUpAsAnInvestorCompanyForm.companyOrgNumber.$touched)}">
+                  <label class="col-sm-4 control-label" for="companyOrgNumber">Organisasjonsnummer:</label>
+                  <div class="col-sm-8">
+                    <input type="text" minlength="9" class="form-control" id="companyOrgNumber" name="companyOrgNumber" ng-model="signUpAsInvestorCompany1.form.companyOrgNumber" ng-change="signUpAsInvestorCompany1.validOrgNumber(signUpAsInvestorCompany1.form.companyOrgNumber)" placeholder="Organisasjonsnummer" required>
+                     <span class="help-block" ng-if="signUpAsAnInvestorCompanyForm.companyOrgNumber.$touched && signUpAsInvestorCompany1.invalidOrg && signUpAsInvestorCompany1.form.companyOrgNumber.length>=9">Organisasjonsnummer er ugyldig</span>
+                    <div ng-messages="signUpAsAnInvestorCompanyForm.companyOrgNumber.$error">
+                      <span class="help-block" ng-show="signUpAsAnInvestorCompanyForm.companyOrgNumber.$touched && signUpAsAnInvestorCompanyForm.companyOrgNumber.$invalid" ng-message="required">Organisasjonsnummer er påkrevd</span>
+                       <span class="help-block" ng-if="signUpAsAnInvestorCompanyForm.companyOrgNumber.$touched" ng-message="minlength">Organisasjonsnummer må være 9 siffer</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : signUpAsAnInvestorCompanyForm.companyAddress.$touched && signUpAsAnInvestorCompanyForm.companyAddress.$invalid}">
+                  <label class="col-sm-4 control-label" for="companyAddress" class="control-label">Bedriftens postadresse:</label>
+                  <div class="col-sm-8">
+                    <textarea type="text" class="form-control" id="companyAddress" name="companyAddress" rows="2" ng-model="signUpAsInvestorCompany1.form.address" placeholder="Gatenavn og nummer" required></textarea>
+                    <div ng-messages="signUpAsAnInvestorCompanyForm.companyAddress.$error">
+                      <span class="help-block" ng-show="signUpAsAnInvestorCompanyForm.companyAddress.$touched && signUpAsAnInvestorCompanyForm.companyAddress.$invalid" ng-message="required">Bedriftens postadresse er påkrevd.</span>
+                    </div>
+                  </div>
+                </div>
+                <!-- <div class="form-group">
+                  <label class="col-sm-4 control-label" for="companyAddressLine2" class="control-label">Adresselinje 2:</label>
+                  <div class="col-sm-8">
+                    <textarea type="text" class="form-control" id="companyAddressLine2" name="companyAddressLine2" ng-model="signUpAsInvestorCompany1.form.addressLine2" rows="2" placeholder="Valgfri"></textarea>
+                  </div>
+                </div> -->
+                <div class="form-group" ng-class="{ 'has-error' : (signUpAsAnInvestorCompanyForm.postalCode.$touched && signUpAsAnInvestorCompanyForm.postalCode.$invalid) || (signUpAsInvestorCompany1.zipCodeZero) || signUpAsInvestorCompany1.landNorway }">
+                  <label class="col-sm-4 control-label" for="postalCode">Postnummer:</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="postalCode" name="postalCode" ng-model="signUpAsInvestorCompany1.form.postalCode" ng-change=" signUpAsInvestorCompany1.postalCodeChanged(signUpAsInvestorCompany1.form.postalCode,signUpAsInvestorCompany1.form.country)" maxlength="12" minlength="4" ng-pattern="/^[0-9]*$/" placeholder="Postnummer" required>
+                    <div ng-messages="signUpAsAnInvestorCompanyForm.postalCode.$error">
+                      <span class="help-block" ng-show="signUpAsAnInvestorCompanyForm.postalCode.$touched && signUpAsAnInvestorCompanyForm.postalCode.$invalid" ng-message="required">Postnummer er påkrevd</span>
+                      <span class="help-block" ng-message="pattern" ng-if="signUpAsAnInvestorCompanyForm.postalCode.$touched && signUpAsAnInvestorCompanyForm.postalCode.$invalid">Postnummer må være tall</span>
+                      <span class="help-block" ng-message="minlength" ng-if="signUpAsAnInvestorCompanyForm.postalCode.$touched && signUpAsAnInvestorCompanyForm.postalCode.$invalid">Postnummer må være 4 siffer</span>
+                    </div>
+                    <span class="help-block" ng-if="signUpAsInvestorCompany1.zipCodeZero">Postnummer er ugyldig</span>
+
+                    <span class="help-block" ng-if="signUpAsInvestorCompany1.landNorway && !signUpAsInvestorCompany1.zipCodeZero">Norsk postnummer må være 4 siffer</span>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : signUpAsAnInvestorCompanyForm.postalPlace.$touched && signUpAsAnInvestorCompanyForm.postalPlace.$invalid}">
+                  <label class="col-sm-4 control-label" for="postalPlace">Poststed:</label>
+                  <div class="col-sm-8">
+                    <input type="text" maxlength="50" class="form-control" id="postalPlace" name="postalPlace" ng-model="signUpAsInvestorCompany1.form.postalLocation" ng-pattern="/^[A-z\u00C0-\u00ff\s'\.,-\/#!$%\^&\*;:{}=\-_`~()]+$/" placeholder="Poststed" required>
+                    <div ng-messages="signUpAsAnInvestorCompanyForm.postalPlace.$error">
+                      <span class="help-block" ng-show="signUpAsAnInvestorCompanyForm.postalPlace.$touched && signUpAsAnInvestorCompanyForm.postalPlace.$invalid" ng-message="required">Poststed er påkrevd</span>
+                      <span class="help-block" ng-message="pattern" ng-if="signUpAsAnInvestorCompanyForm.postalPlace.$touched && signUpAsAnInvestorCompanyForm.postalPlace.$invalid">Poststed må bestå av bokstaver</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : signUpAsAnInvestorCompanyForm.country.$touched && signUpAsAnInvestorCompanyForm.country.$invalid}">
+                  <label class="col-sm-4 control-label" for="country">Land:</label>
+                  <div class="col-sm-8">
+                    <select class="form-control" id="country" ng-options="country.name as country.name for country in signUpAsInvestorCompany1.allCountries" ng-change=" signUpAsInvestorCompany1.postalCodeChanged(signUpAsInvestorCompany1.form.postalCode,signUpAsInvestorCompany1.form.country)" ng-model="signUpAsInvestorCompany1.form.country" name="country" required>
+                      <option value="">- Land -</option>
+                    </select>
+                    <div ng-messages="signUpAsAnInvestorCompanyForm.country.$error">
+                      <span class="help-block" ng-show="signUpAsAnInvestorCompanyForm.country.$touched && signUpAsAnInvestorCompanyForm.country.$invalid" ng-message="required">Land er påkrevd</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : (signUpAsAnInvestorCompanyForm.bankkonto.$touched && signUpAsAnInvestorCompanyForm.bankkonto.$invalid)}">
+                  <label class="col-sm-4 control-label">
+                    Kontonummer:
+                  </label>
+                  <div class="col-sm-8">
+                    <p class="form-control-static">
+                      <input type="text" class="form-control" id="bankkonto" name="bankkonto" ng-model="signUpAsInvestorCompany1.form.bankAccountNumber" placeholder="Norsk kontonummer" ng-pattern="/^((\d{4}\.\d{2}\.\d{5})|\d{11})$/"
+                      ng-change="signUpAsInvestorCompany1.getBankAccountNumber(signUpAsInvestorCompany1.form.bankAccountNumber)" required>
+                      <div ng-messages="signUpAsAnInvestorCompanyForm.bankkonto.$error">
+                        <span class="help-block" ng-show="signUpAsAnInvestorCompanyForm.bankkonto.$touched && signUpAsAnInvestorCompanyForm.bankkonto.$invalid" ng-message="required">Kontonummer er påkrevd</span>
+                        <span class="help-block" ng-show="signUpAsAnInvestorCompanyForm.bankkonto.$touched && signUpAsAnInvestorCompanyForm.bankkonto.$invalid" ng-message="pattern">Kontonummer er ugyldig</span>
+                      </div>
+                    </p>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-4 control-label" for="personalIdNumber">
+                    <span uib-tooltip="Personen med signaturrett har myndighet til å opptre og skrive under på vegne av selskapet.">
+                      Person med signaturrett
+                      <i class="fa fa-question-circle" aria-hidden="true"></i>
+                    </span>
+                  </label>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : signUpAsAnInvestorCompanyForm.firstName.$touched && signUpAsAnInvestorCompanyForm.firstName.$invalid}">
+                  <label for="firstName" class="col-sm-4 control-label">Fornavn:</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="firstName" name="firstName" ng-model="signUpAsInvestorCompany1.form.firstName" ng-pattern="/^[A-z\u00C0-\u00ff\s'\.,-\/#!$%\^&\*;:{}=\-_`~()]+$/" placeholder="Fornavn" required>
+                    <div ng-messages="signUpAsAnInvestorCompanyForm.firstName.$error">
+                      <span class="help-block" ng-show="signUpAsAnInvestorCompanyForm.firstName.$touched && signUpAsAnInvestorCompanyForm.firstName.$invalid" ng-message="required">Fornavn er påkrevd</span>
+                      <span class="help-block" ng-message="pattern" ng-if="signUpAsAnInvestorCompanyForm.firstName.$touched && signUpAsAnInvestorCompanyForm.firstName.$invalid">Fornavn må bestå av bokstaver</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : signUpAsAnInvestorCompanyForm.lastName.$touched && signUpAsAnInvestorCompanyForm.lastName.$invalid}">
+                  <label class="col-sm-4 control-label" for="lastName">Etternavn:</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="lastName" name="lastName" ng-model="signUpAsInvestorCompany1.form.lastName" ng-pattern="/^[A-z\u00C0-\u00ff\s'\.,-\/#!$%\^&\*;:{}=\-_`~()]+$/" placeholder="Etternavn" required>
+                    <div ng-messages="signUpAsAnInvestorCompanyForm.lastName.$error">
+                      <span class="help-block" ng-show="signUpAsAnInvestorCompanyForm.lastName.$touched && signUpAsAnInvestorCompanyForm.lastName.$invalid" ng-message="required">Etternavn er påkrevd</span>
+                      <span class="help-block" ng-message="pattern" ng-if="signUpAsAnInvestorCompanyForm.lastName.$touched && signUpAsAnInvestorCompanyForm.lastName.$invalid">Etternavn må bestå av bokstaver</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : signUpAsAnInvestorCompanyForm.email.$touched && signUpAsAnInvestorCompanyForm.email.$invalid}">
+                  <label class="col-sm-4 control-label" for="email">E-post:</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="email" name="email" ng-model="signUpAsInvestorCompany1.form.SignerEmail" ng-pattern="/^(([^<>()\[\]\\.,;:\s@']+(\.[^<>()\[\]\\.,;:\s@']+)*)|('.+'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/" placeholder="E-post" required>
+                    <div ng-messages="signUpAsAnInvestorCompanyForm.email.$error">
+                      <span class="help-block" ng-message="required" ng-if="signUpAsAnInvestorCompanyForm.email.$touched">E-post er påkrevd</span>
+                      <span class="help-block" ng-message="pattern" ng-if="signUpAsAnInvestorCompanyForm.email.$touched && signUpAsAnInvestorCompanyForm.email.$invalid">E-postadressen må være gyldig</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : (signUpAsAnInvestorCompanyForm.telephone.$touched && signUpAsAnInvestorCompanyForm.telephone.$invalid) || signUpAsInvestorCompany1.invalidPhoneFormat}">
+                  <label class="col-sm-4 control-label" for="telephone">Telefonnummer:</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="telephone" name="telephone" ng-model="signUpAsInvestorCompany1.form.telephone" ng-change="signUpAsInvestorCompany1.isValidPhoneNumber(signUpAsInvestorCompany1.form.telephone)" placeholder="Telefonnummer" required>
+                    <div ng-messages="signUpAsAnInvestorCompanyForm.telephone.$error">
+                      <span class="help-block" ng-show="signUpAsAnInvestorCompanyForm.telephone.$touched && signUpAsAnInvestorCompanyForm.telephone.$invalid" ng-message="required">Telefonnummer er påkrevd</span>
+                      <span class="help-block" ng-if="signUpAsInvestorCompany1.invalidPhoneFormat && !(signUpAsAnInvestorCompanyForm.telephone.$touched &&  signUpAsAnInvestorCompanyForm.telephone.$invalid)">Telefonnummeret er ugyldig</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : (signUpAsAnInvestorCompanyForm.personalIDNumber.$touched && signUpAsAnInvestorCompanyForm.personalIDNumber.$invalid && signUpAsInvestorCompany1.invalidIdFormat) || signUpAsInvestorCompany1.invalidpersonalID || (signUpAsAnInvestorCompanyForm.personalIDNumber.$touched && signUpAsAnInvestorCompanyForm.personalIDNumber.$invalid) }">
+                  <label class="col-sm-4 control-label" for="personalIdNumber">
+                    <span data-toggle="tooltip" uib-tooltip="Vi ber om ditt fødsels- og personnummer som en del av vår verifiseringsprosess. Denne informasjonen vil også benyttes når vi gjør innrapportering til Skatteetaten, slik at din inntekt og formue hos FundingPartner automatisk dukker opp i selvangivelsen. Dine personlige opplysninger vil aldri spres til andre og vil bli lagret på en sikker måte.">
+                      Fødsels- og personnummer:
+                      <i class="fa fa-question-circle" aria-hidden="true"></i>
+                    </span>
+                  </label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="personalIdNumber" name="personalIDNumber" ng-model="signUpAsInvestorCompany1.form.personalIDNumber" ng-change="signUpAsInvestorCompany1.isValidPersonalId()" placeholder="Fødsels- og personnummer" ng-blur="signUpAsInvestorCompany1.getValidPersonalIDNumber(signUpAsInvestorCompany1.form.personalIDNumber)" required>
+                    <div ng-messages="signUpAsAnInvestorCompanyForm.personalIDNumber.$error">
+                    <span class="help-block" ng-if="signUpAsAnInvestorCompanyForm.personalIDNumber.$touched && signUpAsAnInvestorCompanyForm.personalIDNumber.$invalid" ng-message="required">Fødsels- og personnummer er påkrevd</span>
+
+                      <span class="help-block" ng-if="signUpAsAnInvestorCompanyForm.personalIDNumber.$touched && signUpAsAnInvestorCompanyForm.personalIDNumber.$invalid && signUpAsInvestorCompany1.invalidIdFormat ">Fødsels- og personnummer må være tall</span>
+                      <span class="help-block" ng-if="signUpAsInvestorCompany1.invalidpersonalID  && !(signUpAsAnInvestorCompanyForm.personalIDNumber.$touched && signUpAsAnInvestorCompanyForm.personalIDNumber.$invalid && signUpAsInvestorCompany1.invalidIdFormat )">Personnummer er ugyldig</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : signUpAsAnInvestorCompanyForm.nationalityToRespPerson.$touched && signUpAsAnInvestorCompanyForm.nationalityToRespPerson.$invalid}">
+                  <label class="col-sm-4 control-label" for="nationalityToRespPerson">Nasjonalitet:</label>
+                  <div class="col-sm-8">
+                    <select class="form-control" id="nationalityToRespPerson" ng-options="country.name as country.name for country in signUpAsInvestorCompany1.allCountries" ng-model="signUpAsInvestorCompany1.form.Nationality" name="nationalityToRespPerson" required>
+                      <option value="">- Land -</option>
+                    </select>
+                    <div ng-messages="signUpAsAnInvestorCompanyForm.nationalityToRespPerson.$error">
+                      <span class="help-block" ng-show="signUpAsAnInvestorCompanyForm.nationalityToRespPerson.$touched && signUpAsAnInvestorCompanyForm.nationalityToRespPerson.$invalid" ng-message="required">Nasjonalitet er påkrevd</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-4 control-label" for="areWeMultiplePeopleRequiredToCoSignForCompany">
+                    <span data-toggle="tooltip" uib-tooltip="Signaturrett betyr hvem som har myndighet til å opptre og signere på dokumenter på vegne av selskapet. Dette står i firmaattesten og er ofte enten daglig leder eller styrets leder alene. Hvis det er flere som har signaturrett sammen må det krysses av her.">
+                      Kreves det mer enn én person for å signere for selskapet?
+                      <i class="fa fa-question-circle" aria-hidden="true"></i>
+                    </span>
+                  </label>
+                  <div class="col-sm-8">
+                    <div class="checkbox">
+                      <label>
+                        <input type="checkbox" id="postalPlace" ng-model="signUpAsInvestorCompany1.form.AreMultiple">Trykk hvis ja</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-4 control-label" for="personalIdNumber">
+                    <span data-toggle="tooltip" uib-tooltip="Privatpersoner som enten eier, kontrollerer eller har rett til 25% eller mer av eierandelene/aksjene eller stemmene i et selskap.">
+                      Har selskapet andre reelle rettighetshavere enn personen med signaturrett?
+                      <i class="fa fa-question-circle" aria-hidden="true"></i>
+                    </span>
+                  </label>
+                  <div class="col-sm-8">
+                    <div class="checkbox">
+                      <label>
+                        <input type="checkbox" id="postalPlace" ng-model="signUpAsInvestorCompany1.form.reelle">Trykk hvis ja</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-xs-12 col-sm-offset-4 col-sm-8">
+                    <button type="submit" class="btn btn-primary btn-block" ng-click="signUpAsInvestorCompany1.continue()" ng-disabled="signUpAsInvestorCompany1.disableContinue()" double-Click>Fortsett</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

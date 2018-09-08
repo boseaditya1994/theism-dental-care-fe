@@ -1,0 +1,34 @@
+﻿
+<div class="row customTabs">
+  <div class="col-sm-12 col-md-8 col-lg-6">
+    <div class="panel panel-default">
+      <div class="panel-body h-432 p-39">
+        <label class="f-24">Vanlig bankoverføring</label>
+
+        <p>Du setter inn penger som en vanlig overføring i nettbanken. Husk å bruke riktig kontonummer og det personlige KID-nummeret som du ser under. Overføringen tar normalt en dag.</p>
+        
+        <form class="form-horizontal p-t-30" autocomplete="off">
+          <div class="form-group">
+            <label class="col-sm-6 control-label">
+              Bankkontonummer
+            </label>
+            <div class="col-sm-6">
+              <p class="form-control-static">{{norwegian.companyDetails.Account_Number__c}}</p>
+              <!-- Get phone number from the user account -->
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-6 control-label">
+              KID nummer
+            </label>
+            <div class="col-sm-6">
+              <p class="form-control-static">{{norwegian.companyDetails.KID__c}}</p>
+              <!-- Get phone number from the user account -->
+            </div>
+          </div>
+          
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

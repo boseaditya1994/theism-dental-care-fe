@@ -1,0 +1,19 @@
+<div class="row p-b-20" ng-cloak>
+  <div class="col-sm-8 p-50 p-r-15">
+    <img src="images/creditScore.jpg" alt="Kredittkarakter" class="img-responsive">
+    <div class="p-t-20" ng-bind-html="creditScore.creditScore"></div>
+  </div>
+  <div class="col-sm-4 col-md-4 custom-paddding v-border" align="center">
+    <div class="h-285">
+      <div class="custom-border">
+        <h3><strong>Kredittvurdering</strong></h3>
+        <h3 class="m-t-0"><strong>{{creditScore.creditClass}}</strong></h3>
+        <p><a href="#" ng-click="creditScore.popUp()">(<i>Dette forteller ratingen</i>)</a></p>
+      </div>
+    </div>
+    <div ng-repeat="x in creditScore.creditPics track by $index">
+      <img ng-show="x" data-ng-src="data:image/png;base64,{{x}}" class="img-responsive p-b-10" />
+    </div>
+  </div>
+</div>
+

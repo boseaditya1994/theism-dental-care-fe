@@ -1,0 +1,84 @@
+<div class="container-fluid ">
+
+  <h4>Har du allerede en brukerkonto? <a ui-sref="login">Logg inn</a></h4>
+
+  <br>
+  <div class="row">
+    <div class="col-md-6 col-lg-7">
+      <div class="panel grey-background-adjusted">
+        <div class="panel-default">
+          <div class="panel-heading"> Registrer deg for å få en låntager-konto og send inn en lånesøknad</div>
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-md-10 col-lg-8">
+                <form class="form-horizontal" name="borrowerSignUp" autocomplete="off" ng-submit="borrowerSignUp.$valid && signUpAsABorrower.signup()">
+                  <div class="form-group" ng-class="{'has-error' : borrowerSignUp.email.$touched && borrowerSignUp.email.$invalid}">
+                    <label class="col-sm-4 control-label" for="email">E-post</label>
+                    <div class="col-sm-8">
+                      <input type="email" class="form-control" id="email" name="email" ng-model="signUpAsABorrower.applicationForm.applicantEmail" ng-pattern="/^(([^<>()\[\]\\.,;:\s@']+(\.[^<>()\[\]\\.,;:\s@']+)*)|('.+'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/" required>
+                      <div ng-messages="borrowerSignUp.email.$error">
+                        <span class="help-block" ng-message="required" ng-if="borrowerSignUp.email.$touched">
+                                                    E-postadressen din er påkrevd
+                                                </span>
+                        <span class="help-block" ng-message="pattern" ng-if="borrowerSignUp.email.$touched && borrowerSignUp.email.$invalid">
+                                                    E-postadressen må være gyldig
+                                                </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group" ng-class="{'has-error' : borrowerSignUp.password.$touched && borrowerSignUp.password.$invalid}">
+                    <label class="col-sm-4 control-label" for="password">Passord</label>
+                    <div class="col-sm-8">
+                      <input type="password" class="form-control" id="password" name="password" ng-model="signUpAsABorrower.applicationForm.applicantPassword" ng-pattern="/^(?=.*\d)(?=.*[A-Z]).{6,20}$/" required>
+                      <div ng-messages="borrowerSignUp.password.$error">
+                        <span class="help-block" ng-message="required" ng-if="borrowerSignUp.password.$touched">
+                                                    Du må skrive inn ønsket passord
+                                                </span>
+                        <span class="help-block" ng-message="pattern" ng-if="borrowerSignUp.password.$touched && borrowerSignUp.password.$invalid">
+                                                    Passord må ha minst en stor bokstav, et tall og være mellom 6 og 20 tegn
+                                                </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group" ng-class="{'has-error' : (borrowerSignUp.confirmpassword.$touched && borrowerSignUp.confirmpassword.$invalid) || (borrowerSignUp.confirmpassword.$touched && signUpAsABorrower.applicationForm.applicantPassword!=signUpAsABorrower.confirmPassword && signUpAsABorrower.applicationForm.applicantPassword)}">
+                    <label class="col-sm-4 control-label" for="confirmpassword">Bekreft passord</label>
+                    <div class="col-sm-8">
+                      <input type="password" class="form-control" id="confirmpassword" name="confirmpassword" ng-model="signUpAsABorrower.confirmPassword" required>
+                      <div ng-messages="borrowerSignUp.confirmpassword.$error">
+                        <span class="help-block" ng-message="required" ng-show="borrowerSignUp.confirmpassword.$touched && borrowerSignUp.confirmpassword.$invalid">
+                                                    Vennligst bekreft passordet ditt
+                                                </span>
+                      </div>
+                      <div ng-show="signUpAsABorrower.confirmPassword && borrowerSignUp.confirmpassword.$touched && signUpAsABorrower.applicationForm.applicantPassword">
+                        <span class="help-block" ng-show="borrowerSignUp.confirmpassword.$touched && signUpAsABorrower.applicationForm.applicantPassword!=signUpAsABorrower.confirmPassword">
+                                                Passordene stemmer ikke overens</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-xs-12 col-sm-offset-4 col-sm-8">
+                      <button type="submit" ng-click="signUpAsABorrower.signUp()" ng-disabled="signUpAsABorrower.disableSignUp()" class="btn btn-primary btn-block" double-Click timeout="5000">Registrer deg</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-5">
+      <div class="panel grey-background-adjusted">
+        <div class="panel-default">
+          <div class="panel-heading">Registrer deg nå</div>
+          <ul class="list-unstyled">
+            <li class="color-grey m-l-15"><span class="fa fa-check"></span> Lån fra 100 000 til 10 millioner kroner.</li>
+            <li class="color-grey m-l-15"><span class="fa fa-check"></span> Opptil 5-års løpetid.</li>
+            <li class="color-grey m-l-15"><span class="fa fa-check"></span> Oppnå rask og enkel finansiering med et svar innen 48 timer.</li>
+          </ul>
+          <h6 class="color-grey m-l-15">*Faktisk avkastning kan variere, ettersom å investere via FundingPartner innebærer risiko.</h6>
+          <br>
+        </div>
+      </div>
+    </div>
+  </div>
